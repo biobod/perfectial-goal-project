@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux'
 import api from './APIUtilites/api';
+import store from './reduxComponents/store'
 
 class App extends Component {
   doCall = () => {
@@ -8,10 +10,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Provider store={store}>
         <div>React Goal Project</div>
         <button onClick={this.doCall}>DO api call</button>
-      </div>
+      </Provider>
     );
   }
 }
