@@ -12,7 +12,7 @@ class Api {
     });
   }
 
-  getSome = () => this.axios.post('/api/some/', {})
+  getSome = () => this.axios.get('/api/user/test', {})
 }
 
 const api = new Api();
