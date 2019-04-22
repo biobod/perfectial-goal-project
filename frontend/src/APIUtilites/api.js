@@ -12,7 +12,11 @@ class Api {
     });
   }
 
-  getSome = () => this.axios.get('/api/user/test', {})
+  getSome = () => this.axios.get('/api/user/test')
+
+  getUser = id => this.axios.get(`/api/user/${id}`)
+
+  saveUser = ({ name, lastName }) => this.axios.post('/api/user/save', { name, lastName })
 }
 
 const api = new Api();
