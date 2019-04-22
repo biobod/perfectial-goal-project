@@ -16,6 +16,11 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
+  resolve: {
+    alias: {
+      Common: path.resolve(__dirname, './src/common'),
+    },
+  },
   module: {
     rules: [{
       test: /\.js$/,
