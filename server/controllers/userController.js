@@ -3,10 +3,11 @@ const User = require('../models/userModel')
 exports.test = function (req, res) {
   console.log('Test successful')
 }
+
 exports.userSave = function (req, res) {
   console.log(req.body)
-  const { name, lastName } = req.body
-  const user = {name, lastName}
+  const { name, password, email } = req.body
+  const user = { name, password, email }
   User.create(user, function (err, data) {
     if(err) {
       console.log('Error saving: ', err)
@@ -14,11 +15,30 @@ exports.userSave = function (req, res) {
     res.send(data)
   })
 }
+
 exports.getUser = function (req, res) {
   console.log('user', req.params)
 
   User.findById(req.params.id, function (err, user) {
     if(err) return next
     res.send(user)
+  })
+}
+exports.loginUser = function (req, res) {
+  const { email = '', password = ''} = req.body
+  User.findOne({ email }, function (err, user) {
+    if (err) console.log('Error findOne: ', err)
+
+    if(user) {
+      user.comparePassword(password, function (err, isMatch) {
+        if (err) console.log('Error comparePassword: ', err)
+        if (isMatch) {
+          res.send(user)
+        } else {
+          console.log('wrong pass')
+        }
+      });
+    }
+
   })
 }

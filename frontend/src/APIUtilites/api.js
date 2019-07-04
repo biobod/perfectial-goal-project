@@ -16,7 +16,10 @@ class Api {
 
   getUser = id => this.axios.get(`/api/user/${id}`)
 
-  saveUser = ({ name, lastName }) => this.axios.post('/api/user/save', { name, lastName })
+  loginUser = ({ email, password }) => this.axios.post('/api/user/login', { email, password })
+
+
+  saveUser = ({ name, password, email }) => this.axios.post('/api/user/save', { name, password, email })
 }
 
 const api = new Api();

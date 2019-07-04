@@ -25,10 +25,7 @@ class MainPage extends Component {
         <Link to="/login">Login Page</Link>
         <div>React Goal Project</div>
         <button onClick={this.doCall}>DO api call</button>
-        <button onClick={this.saveUser}>Save user</button>
         <button onClick={this.getUser}>Get user</button>
-
-
       </div>
     );
   }
