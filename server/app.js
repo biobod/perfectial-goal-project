@@ -7,6 +7,7 @@ const config = require('../config/config');
 const mongoose = require('mongoose');
 const userRoute = require('./routes/userRoute')
 const { port, graphqlPath } = config;
+const User = require('./models/userModel')
 
 const dbPath = 'mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb'
 
@@ -15,36 +16,32 @@ const db = mongoose.connection;
 mongoose.Promise = global.Promise;
 db.on('error', console.error.bind(console, "DB error"))
 
-const users = [
-  {
-    email: "test@test.com",
-    name: "testUser",
-    _id: "5d1e02a722e8b20e89a9738c",
-  },
-  {
-    email: "test2@test.com",
-    name: "testUser2",
-    _id: "5d1e059b35ec120f4bca8584"
-  }
-]
-
 const typeDefs = gql`
-  type Users {
+  type User {
     name: String
     email: String
     _id: String
   }
 
   type Query {
-    users: [Users]
-    getUser(_id: String): Users
+    users: [User]
+    getUser(_id: String): User
   }
 `;
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
-    users: () => users,
-    getUser: (root, {_id}) => users.find( u => u._id === _id)
+    users: async () => await User.find({}),
+    getUser: async (root, {_id}) => {
+      try {
+        const response = await(User.findOne({_id}))
+        return response && response.data
+      }
+      catch (error) {
+        return error
+      }
+
+    },
   },
 };
 

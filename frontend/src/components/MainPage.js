@@ -19,9 +19,6 @@ class MainPage extends Component {
       .then(result => console.log(result));
   }
 
-  getAllUsers = () => api.getUsers().then(console.log).catch(e => console.log('Error', e));
-
-
   render() {
     return (
       <div>
@@ -29,8 +26,7 @@ class MainPage extends Component {
         <Link to="/login">Login Page</Link>
         <div>React Goal Project</div>
         <button type="button" onClick={this.getGraphUser}>get Graph User</button>
-        <button type="button" onClick={this.getAllGraphUsers}>Get all Graph users</button>
-        <button type="button" onClick={this.getAllUsers}>Get all users from db</button>
+        <button type="button" onClick={this.getAllGraphUsers}>Get all users</button>
 
       </div>
     );

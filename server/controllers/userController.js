@@ -1,9 +1,5 @@
 const User = require('../models/userModel')
 
-exports.test = function (req, res) {
-  console.log('Test successful')
-}
-
 exports.userSave = function (req, res) {
   console.log(req.body)
   const { name, password, email } = req.body
@@ -23,8 +19,6 @@ exports.getAllUsers = function (req, res) {
 }
 
 exports.getUser = function (req, res) {
-  console.log('user', req.params)
-
   User.findById(req.params.id, function (err, user) {
     if(err) return next
     res.send(user)
