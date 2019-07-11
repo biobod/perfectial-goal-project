@@ -15,33 +15,36 @@ const db = mongoose.connection;
 mongoose.Promise = global.Promise;
 db.on('error', console.error.bind(console, "DB error"))
 
-const books = [
+const users = [
   {
-    title: 'Harry Potter and the Chamber of Secrets',
-    author: 'J.K. Rowling',
+    email: "test@test.com",
+    name: "testUser",
+    _id: "5d1e02a722e8b20e89a9738c",
   },
   {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton',
-  },
-];
-
+    email: "test2@test.com",
+    name: "testUser2",
+    _id: "5d1e059b35ec120f4bca8584"
+  }
+]
 
 const typeDefs = gql`
-
-  type Book {
-    title: String
-    author: String
+  type Users {
+    name: String
+    email: String
+    _id: String
   }
 
   type Query {
-    books: [Book]
+    users: [Users]
+    getUser(_id: String): Users
   }
 `;
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
-    books: () => books,
+    users: () => users,
+    getUser: (root, {_id}) => users.find( u => u._id === _id)
   },
 };
 
