@@ -11,9 +11,12 @@
   "author": "Bogdan Nalisnikovskiy",
   "license": "ISC",
   "dependencies": {
+    "apollo-server": "^2.6.8",
+    "apollo-server-express": "^2.6.8",
     "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "graphql": "^14.4.2",
     "mongodb": "^3.2.3",
     "mongoose": "^5.5.1",
     "path": "^0.12.7"

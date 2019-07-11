@@ -15,6 +15,12 @@ exports.userSave = function (req, res) {
     res.send(data)
   })
 }
+exports.getAllUsers = function (req, res) {
+  User.find({}, function (err, users) {
+    if(err) return next
+    res.send(users)
+  })
+}
 
 exports.getUser = function (req, res) {
   console.log('user', req.params)

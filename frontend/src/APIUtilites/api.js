@@ -18,6 +18,7 @@ class Api {
 
   loginUser = ({ email, password }) => this.axios.post('/api/user/login', { email, password })
 
+  getUsers = () => this.axios.get('/api/user/allUsers/')
 
   saveUser = ({ name, password, email }) => this.axios.post('/api/user/save', { name, password, email })
 }
