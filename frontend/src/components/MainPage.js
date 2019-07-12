@@ -1,32 +1,20 @@
 import React, { Component } from 'react';
-import ApolloClient, { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
-import { uri } from '../../../config/config';
 import api from '../APIUtilites/api';
 
-const client = new ApolloClient({ uri });
 
 class MainPage extends Component {
-  getGraphUser = () => {
-    client
-      .query({ query: gql`{getUser(_id: "5d1e02a722e8b20e89a9738c") { name email }}` })
-      .then(result => console.log(result));
-  }
-
-  getAllGraphUsers = () => {
-    client
-      .query({ query: gql`{users { name email _id }}` })
-      .then(result => console.log(result));
-  }
-
   render() {
     return (
       <div>
         <Link to="/second">Second Page</Link>
+        <br />
         <Link to="/login">Login Page</Link>
+        <br />
+        <Link to="/signup">Sign up Page</Link>
         <div>React Goal Project</div>
-        <button type="button" onClick={this.getGraphUser}>get Graph User</button>
-        <button type="button" onClick={this.getAllGraphUsers}>Get all users</button>
+        <button type="button" onClick={api.getGraphUser}>get Graph User</button>
+        <button type="button" onClick={api.getAllGraphUsers}>Get all users</button>
 
       </div>
     );

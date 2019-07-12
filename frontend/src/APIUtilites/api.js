@@ -1,26 +1,35 @@
-import axios from 'axios';
-import config from '../../../config/config';
+import ApolloClient, { gql } from 'apollo-boost';
+import { uri } from '../../../config/config';
 
-const { serverPath } = config;
+const client = new ApolloClient({ uri });
+
 
 class Api {
-  constructor(baseURL = serverPath) {
-    this.axios = axios.create({
-      baseURL,
-      mode: 'same-origin',
-      headers: {},
-    });
+  getGraphUser = () => {
+    client
+      .query({ query: gql`{getUser(_id: "5d1e02a722e8b20e89a9738c") { name email }}` })
+      .then(console.log);
   }
 
-  getSome = () => this.axios.get('/api/user/test')
+  getAllGraphUsers = () => {
+    client
+      .query({ query: gql`{users { name email _id }}` })
+      .then(console.log);
+  }
 
-  getUser = id => this.axios.get(`/api/user/${id}`)
+  loginUser = ({ email, password }) => {
+    const method = 'loginUser';
+    return client
+      .query({ query: gql`{${method}(email: "${email}", password: "${password}") { name email _id }}` })
+      .then(res => res.data[method]);
+  }
 
-  loginUser = ({ email, password }) => this.axios.post('/api/user/login', { email, password })
-
-  getUsers = () => this.axios.get('/api/user/allUsers/')
-
-  saveUser = ({ name, password, email }) => this.axios.post('/api/user/save', { name, password, email })
+  saveUser = ({ name, password, email }) => {
+    const method = 'saveUser';
+    return client
+      .mutate({ mutation: gql`mutation {${method}(email: "${email}", password: "${password}", name: "${name}") { name email _id }}` })
+      .then(res => res.data[method]);
+  }
 }
 
 const api = new Api();

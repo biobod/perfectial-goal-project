@@ -3,33 +3,21 @@ const User = require('../models/userModel')
 exports.getAllUsers = async () => await User.find({});
 exports.getUser = async (id) => await User.findById(id);
 
-exports.userSave = function (req, res) {
-  console.log(req.body)
-  const { name, password, email } = req.body
-  const user = { name, password, email }
-  User.create(user, function (err, data) {
-    if(err) {
-      console.log('Error saving: ', err)
-    }
-    res.send(data)
-  })
+exports.loginUser = async ({ email, password }) => {
+  const user = await User.findOne({ email })
+  if(user) {
+    const isMatch = await user.comparePassword(password);
+    return isMatch ? user : new Error('Wrong password')
+  }
+  return new Error('Wrong email')
 }
 
-exports.loginUser = function (req, res) {
-  const { email = '', password = ''} = req.body
-  User.findOne({ email }, function (err, user) {
-    if (err) console.log('Error findOne: ', err)
-
-    if(user) {
-      user.comparePassword(password, function (err, isMatch) {
-        if (err) console.log('Error comparePassword: ', err)
-        if (isMatch) {
-          res.send(user)
-        } else {
-          console.log('wrong pass')
-        }
-      });
-    }
-
-  })
+exports.userSave =  async ({ email, password, name }) => {
+  console.log('userSave', email)
+  try {
+    return await User.create({email, password, name})
+  } catch (error) {
+    return error
+  }
 }
+

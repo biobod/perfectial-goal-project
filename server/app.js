@@ -4,7 +4,6 @@ const cors = require('cors')
 const bodyParser =  require('body-parser');
 const config = require('../config/config');
 const mongoose = require('mongoose');
-const userRoute = require('./routes/userRoute')
 const resolvers = require('./resolvers')
 const typeDefs = require('./typeDefs')
 const { port, graphqlPath } = config;
@@ -24,6 +23,5 @@ server.applyMiddleware({ app, path: graphqlPath });
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use('/api/user/', userRoute)
 
 app.listen(port, () => console.log(`Server is running on port ${port}${server.graphqlPath}`))

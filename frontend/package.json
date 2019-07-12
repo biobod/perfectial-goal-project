@@ -13,7 +13,6 @@
   "dependencies": {
     "@babel/polyfill": "7.4.3",
     "apollo-boost": "^0.4.3",
-    "axios": "0.18.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-jsx-a11y": "6.2.1",
