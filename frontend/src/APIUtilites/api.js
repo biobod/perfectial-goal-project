@@ -1,7 +1,7 @@
 import ApolloClient, { gql } from 'apollo-boost';
 import { uri } from '../../../config/config';
 
-const client = new ApolloClient({ uri });
+export const client = new ApolloClient({ uri });
 
 
 class Api {
