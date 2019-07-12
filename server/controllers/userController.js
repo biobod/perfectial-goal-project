@@ -1,5 +1,8 @@
 const User = require('../models/userModel')
 
+exports.getAllUsers = async () => await User.find({});
+exports.getUser = async (id) => await User.findById(id);
+
 exports.userSave = function (req, res) {
   console.log(req.body)
   const { name, password, email } = req.body
@@ -11,19 +14,7 @@ exports.userSave = function (req, res) {
     res.send(data)
   })
 }
-exports.getAllUsers = function (req, res) {
-  User.find({}, function (err, users) {
-    if(err) return next
-    res.send(users)
-  })
-}
 
-exports.getUser = function (req, res) {
-  User.findById(req.params.id, function (err, user) {
-    if(err) return next
-    res.send(user)
-  })
-}
 exports.loginUser = function (req, res) {
   const { email = '', password = ''} = req.body
   User.findOne({ email }, function (err, user) {
