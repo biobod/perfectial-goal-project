@@ -2,7 +2,13 @@ import ApolloClient, { gql, InMemoryCache, HttpLink } from 'apollo-boost';
 import { uri } from '../../../config/config';
 
 const cache = new InMemoryCache();
+const result = localStorage.getItem('user');
 
+cache.writeData({
+  data: {
+    user: { ...JSON.parse(result), __typename: 'user' },
+  },
+});
 export const client = new ApolloClient({
   cache,
   uri,
@@ -20,15 +26,15 @@ class Api {
 
   verifyUser = async () => {
     const method = 'verifyUser';
-    const result = localStorage.getItem('user');
-    if (result) {
-      const { _id, token } = JSON.parse(result);
+    const localStorageResult = localStorage.getItem('user');
+    if (localStorageResult) {
+      const { _id, token } = JSON.parse(localStorageResult);
       const user = await client
         .query({ query: gql`{verifyUser(_id: "${_id}", token: "${token}") { name email }}` })
-        .then(res => res.data[method])
+        .then(res => res.data[method]);
       return user;
     }
-    return { message: 'sss'};
+    return { message: 'sss' };
   }
 
   getAllGraphUsers = () => {
