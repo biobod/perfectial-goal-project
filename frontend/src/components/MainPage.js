@@ -7,8 +7,8 @@ import api from '../APIUtilites/api';
 const verifyUser = gql`query verifyUser($id: String!, $token: String!){verifyUser(_id: $id, token: $token) { name email }}`;
 
 const getLocalUser = gql`
-  query user {
-    user @client {
+  query localStorageUser {
+    localStorageUser @client {
       token
       _id
     }
@@ -20,8 +20,11 @@ class MainPage extends Component {
     return (
       <Fragment>
         <Query query={getLocalUser}>
-          {({ data: { user } }) => (
-            <Query query={verifyUser} variables={{ id: user._id, token: user.token }}>
+          {({ data: { localStorageUser } }) => (
+            <Query
+              query={verifyUser}
+              variables={{ id: localStorageUser._id, token: localStorageUser.token }}
+            >
               {({ data, loading, error }) => {
                 if (loading) return <p>Loading...</p>;
                 if (error) return <Redirect to="/login" />;

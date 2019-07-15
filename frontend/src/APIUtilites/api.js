@@ -6,7 +6,7 @@ const result = localStorage.getItem('user');
 
 cache.writeData({
   data: {
-    user: { ...JSON.parse(result), __typename: 'user' },
+    localStorageUser: { ...JSON.parse(result), __typename: 'localStorageUser' },
   },
 });
 export const client = new ApolloClient({
@@ -20,7 +20,7 @@ export const client = new ApolloClient({
 class Api {
   getGraphUser = () => {
     client
-      .query({ query: gql`{getUser(_id: "5d1e02a722e8b20e89a9738c") { name email token }}` })
+      .query({ query: gql`{getUser(_id: "5d1e02a722e8b20e89a9738c") { name email }}` })
       .then(console.log);
   }
 
