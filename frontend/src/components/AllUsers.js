@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Query } from "react-apollo";
+import { Query, ApolloConsumer } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
 
 class AllUsers extends Component {
   render() {
-    console.log(this.props)
+    console.log(this.props);
     return (
       <div>
         <Query
@@ -15,13 +15,24 @@ class AllUsers extends Component {
             if (loading) return <p>Loading...</p>;
             if (error) return <p>Error :(</p>;
 
-            return data.users.map(({ name, email }) => (
+            return data.users.map(({ name, email, _id }) => (
               <div key={name}>
-                <p>{name}: {email}</p>
+                <p>
+                  {name}
+                    :
+                  {' '}
+                  {email}
+                  {' '}
+                  {_id}
+                </p>
               </div>
             ));
           }}
         </Query>
+        <ApolloConsumer>
+          {data => (
+            <button type="button" onClick={() => console.log(data)}>get stored data</button>)}
+        </ApolloConsumer>
       </div>
     );
   }

@@ -1,14 +1,34 @@
-import ApolloClient, { gql } from 'apollo-boost';
+import ApolloClient, { gql, InMemoryCache, HttpLink } from 'apollo-boost';
 import { uri } from '../../../config/config';
 
-export const client = new ApolloClient({ uri });
+const cache = new InMemoryCache();
+
+export const client = new ApolloClient({
+  cache,
+  uri,
+  link: new HttpLink({ uri }),
+  resolvers: {},
+});
 
 
 class Api {
   getGraphUser = () => {
     client
-      .query({ query: gql`{getUser(_id: "5d1e02a722e8b20e89a9738c") { name email }}` })
+      .query({ query: gql`{getUser(_id: "5d1e02a722e8b20e89a9738c") { name email token }}` })
       .then(console.log);
+  }
+
+  verifyUser = async () => {
+    const method = 'verifyUser';
+    const result = localStorage.getItem('user');
+    if (result) {
+      const { _id, token } = JSON.parse(result);
+      const user = await client
+        .query({ query: gql`{verifyUser(_id: "${_id}", token: "${token}") { name email }}` })
+        .then(res => res.data[method])
+      return user;
+    }
+    return { message: 'sss'};
   }
 
   getAllGraphUsers = () => {
@@ -17,11 +37,18 @@ class Api {
       .then(console.log);
   }
 
-  loginUser = ({ email, password }) => {
+  loginUser = async ({ email, password }) => {
     const method = 'loginUser';
-    return client
-      .query({ query: gql`{${method}(email: "${email}", password: "${password}") { name email _id }}` })
+    const data = await client
+      .query({ query: gql`{${method}(email: "${email}", password: "${password}") { name email _id token }}` })
       .then(res => res.data[method]);
+    const { token, _id } = data;
+    const localData = {
+      token,
+      _id,
+    };
+    localStorage.setItem('user', JSON.stringify(localData));
+    return data;
   }
 
   saveUser = ({ name, password, email }) => {

@@ -4,12 +4,14 @@ const UserQQLSchema = `{
     name: String
     email: String
     _id: String
+    token: String
   }`;
 
 const query = `{
     users: [User]
     getUser(_id: String): User
     loginUser(email: String, password: String): User
+    verifyUser(_id: String, token: String): User
   }`;
 
 const mutation = ` {

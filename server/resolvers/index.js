@@ -1,4 +1,4 @@
-const { getUser, getAllUsers, loginUser, userSave } = require('../controllers/userController')
+const { getUser, getAllUsers, loginUser, verifyUser, userSave } = require('../controllers/userController')
 
 
 const resolvers = {
@@ -6,6 +6,7 @@ const resolvers = {
     users: async () => getAllUsers(),
     getUser: (root, {_id}) => getUser(_id),
     loginUser: (root, params) => loginUser(params),
+    verifyUser: (root, params) => verifyUser(params),
   },
   Mutation: {
     saveUser: (root, params) => userSave(params),

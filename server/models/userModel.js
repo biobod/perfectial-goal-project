@@ -1,8 +1,10 @@
 const mongosse = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const Schema = mongosse.Schema;
 
 const SALT_WORK_FACTOR = 10;
+const secretKey = 'app_secret_key';
 
 const UserSchema = new Schema({
   name: { type: String, required: true, max: 100, unique: false},
@@ -31,11 +33,24 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-UserSchema.methods.comparePassword = function(candidatePassword) {
+UserSchema.methods.compareToken = function(token) {
+  return new Promise((res, rej) => {
+    jwt.verify(token, secretKey, function(err, decoded) {
+      if (err) {
+        rej(new Error('token is no valid'));
+      }else{
+        res(decoded.id)
+      }
+    })
+    });
+  };
+
+UserSchema.methods.comparePassword = function(candidatePassword, id) {
   return new Promise((res, rej) => {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
       if (err) return new Error('something going wrong');
-      res(isMatch);
+      const token = jwt.sign({ id }, secretKey, { expiresIn: '5 days' });
+      res({isMatch, token});
     });
   })
 

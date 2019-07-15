@@ -5,7 +5,27 @@ import api from '../APIUtilites/api';
 
 
 class MainPage extends Component {
+  constructor() {
+    super();
+    this.getUser();
+
+    this.state = {
+      user: null,
+      error: null,
+    };
+  }
+
+  getUser = async () => {
+    api.verifyUser().then(user => this.setState({ user })).catch(error => this.setState({ error }));
+  }
+
   render() {
+    const { user, error } = this.state;
+    const { history } = this.props;
+    console.log(user);
+    // if (!user) {
+    //   history.push('/login');
+    // }
     return (
       <div>
         <Link to="/second">Second Page</Link>
@@ -18,6 +38,7 @@ class MainPage extends Component {
         <div>React Goal Project</div>
         <button type="button" onClick={api.getGraphUser}>get Graph User</button>
         <button type="button" onClick={api.getAllGraphUsers}>Get all users</button>
+        <button type="button" onClick={api.verifyUser}>Verify user</button>
 
       </div>
     );
