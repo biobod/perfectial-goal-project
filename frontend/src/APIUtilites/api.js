@@ -21,7 +21,14 @@ export const client = new ApolloClient({
   cache,
   uri,
   link: new HttpLink({ uri }),
-  resolvers: {},
+  resolvers: {
+    User: {
+      setUser: (user) => {
+        console.log(user);
+        return user;
+      },
+    },
+  },
 });
 
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../APIUtilites/api';
 
 
-class MainPage extends Component {
+class HomePage extends Component {
   render() {
     return (
       <Fragment>
@@ -24,4 +24,4 @@ class MainPage extends Component {
   }
 }
 
-export default MainPage;
+export default HomePage;
