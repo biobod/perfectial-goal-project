@@ -1,4 +1,7 @@
-import ApolloClient, { gql, InMemoryCache, HttpLink } from 'apollo-boost';
+import ApolloClient, {
+  gql, InMemoryCache, HttpLink, ApolloLink,
+} from 'apollo-boost';
+import { onError } from 'apollo-link-error';
 import { uri } from '../../../config/config';
 
 const cache = new InMemoryCache();
@@ -18,18 +21,23 @@ cache.writeData({
     localStorageUser: { ...getUserFromStorage(), __typename: 'localStorageUser' },
   },
 });
+const httpLink = new HttpLink({ uri });
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    console.log('graphQLErrors -2ewd', graphQLErrors);
+  }
+
+  if (networkError) {
+    console.log('networkError-342342323', networkError);
+  }
+});
+const link = ApolloLink.from([errorLink, httpLink]);
 
 export const client = new ApolloClient({
   cache,
   uri,
-  link: new HttpLink({ uri }),
+  link,
   resolvers: {
-    User: {
-      setUser: (user) => {
-        console.log(user);
-        return user;
-      },
-    },
   },
 });
 
