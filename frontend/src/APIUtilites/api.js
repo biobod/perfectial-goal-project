@@ -26,7 +26,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     console.log('graphQLErrors -2ewd', graphQLErrors);
   }
-
   if (networkError) {
     console.log('networkError-342342323', networkError);
   }
