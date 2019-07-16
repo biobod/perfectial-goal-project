@@ -2,11 +2,19 @@ import ApolloClient, { gql, InMemoryCache, HttpLink } from 'apollo-boost';
 import { uri } from '../../../config/config';
 
 const cache = new InMemoryCache();
-const result = localStorage.getItem('user');
+const getUserFromStorage = () => {
+  const result = localStorage.getItem('user');
+  if (!result) return { token: '', _id: '' };
+  const { token, _id } = JSON.parse(result);
+  if (!token || !_id) {
+    return { token: '', _id: '' };
+  }
+  return { token, _id };
+};
 
 cache.writeData({
   data: {
-    localStorageUser: { ...JSON.parse(result), __typename: 'localStorageUser' },
+    localStorageUser: { ...getUserFromStorage(), __typename: 'localStorageUser' },
   },
 });
 export const client = new ApolloClient({
