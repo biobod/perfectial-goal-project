@@ -1,19 +1,12 @@
 import React from 'react';
-
+import {
+  oneOfType, node, func, shape,
+} from 'prop-types';
 import { Redirect, Route } from 'react-router';
 import { Query, ApolloConsumer } from 'react-apollo';
-import { gql } from 'apollo-boost';
+import { getLocalUser } from '../APIUtilites/clientQuery';
+import { verifyUser } from '../APIUtilites/apiQuery';
 
-const verifyUser = gql`query verifyUser($id: String!, $token: String!){verifyUser(_id: $id, token: $token) { name email, _id }}`;
-
-const getLocalUser = gql`
-  query localStorageUser {
-    localStorageUser @client {
-      token
-      _id
-    }
-  }
-`;
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => (
   <Route
     {...rest}
@@ -37,6 +30,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => (
                       />
                     );
                   }
+                  console.log({user}, localStorageUser)
                   client.writeData({ data: { user } });
                   return (
                     <RouteComponent {...props} />
@@ -51,4 +45,11 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => (
   />
 );
 
+PrivateRoute.propTypes = {
+  location: shape({}),
+  component: oneOfType([node, func]).isRequired,
+};
+PrivateRoute.defaultProps = {
+  location: null,
+};
 export default PrivateRoute;

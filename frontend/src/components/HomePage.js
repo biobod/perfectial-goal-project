@@ -15,10 +15,8 @@ class HomePage extends Component {
         <br />
         <Link to="/all_users">All users page </Link>
         <div>React Goal Project</div>
-        <button type="button" onClick={api.getGraphUser}>get Graph User</button>
-        <button type="button" onClick={api.getAllGraphUsers}>Get all users</button>
-        <button type="button" onClick={api.verifyUser}>Verify user</button>
-
+        <button type="button" onClick={api.getGraphUser}>get User</button>
+        <button type="button" onClick={api.getUsers}>Get all users</button>
       </Fragment>
     );
   }

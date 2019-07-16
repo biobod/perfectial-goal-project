@@ -2,6 +2,7 @@ import ApolloClient, { gql, InMemoryCache, HttpLink } from 'apollo-boost';
 import { uri } from '../../../config/config';
 
 const cache = new InMemoryCache();
+
 const getUserFromStorage = () => {
   const result = localStorage.getItem('user');
   if (!result) return { token: '', _id: '' };
@@ -17,6 +18,7 @@ cache.writeData({
     localStorageUser: { ...getUserFromStorage(), __typename: 'localStorageUser' },
   },
 });
+
 export const client = new ApolloClient({
   cache,
   uri,
@@ -39,20 +41,7 @@ class Api {
       .then(console.log);
   }
 
-  verifyUser = async () => {
-    const method = 'verifyUser';
-    const localStorageResult = localStorage.getItem('user');
-    if (localStorageResult) {
-      const { _id, token } = JSON.parse(localStorageResult);
-      const user = await client
-        .query({ query: gql`{verifyUser(_id: "${_id}", token: "${token}") { name email }}` })
-        .then(res => res.data[method]);
-      return user;
-    }
-    return { message: 'sss' };
-  }
-
-  getAllGraphUsers = () => {
+  getUsers = () => {
     client
       .query({ query: gql`{users { name email _id }}` })
       .then(console.log);
@@ -69,6 +58,11 @@ class Api {
       _id,
     };
     localStorage.setItem('user', JSON.stringify(localData));
+    cache.writeData({
+      data: {
+        localStorageUser: { ...getUserFromStorage(), __typename: 'localStorageUser' },
+      },
+    });
     return data;
   }
 
