@@ -7,8 +7,6 @@ class HomePage extends Component {
   render() {
     return (
       <Fragment>
-        <Link to="/second">Second Page</Link>
-        <br />
         <Link to="/login">Login Page</Link>
         <br />
         <Link to="/signup">Sign up Page</Link>

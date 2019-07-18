@@ -30,7 +30,6 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => (
                       />
                     );
                   }
-                  console.log({user}, localStorageUser)
                   client.writeData({ data: { user } });
                   return (
                     <RouteComponent {...props} />

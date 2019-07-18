@@ -12,7 +12,6 @@ import './index.css';
 const styles = {
   app: {
     height: '100%',
-    padding: 30,
     width: '100%',
     backgroundColor: '#f5f5f5',
     textAlign: 'center',
