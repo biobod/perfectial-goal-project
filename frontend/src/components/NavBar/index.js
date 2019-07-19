@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Query } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import { shape } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 
 import { withStyles } from '@material-ui/styles';
-import { getUser } from '../APIUtilites/clientQuery';
+import { getUser } from '../../APIUtilites/clientQuery';
 
 const styles = {
   grow: {
@@ -32,7 +33,7 @@ const styles = {
   },
 };
 
-const NavBar = ({ classes, history }) => {
+const NavBar = ({ classes, history, data: { user } }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const menuId = 'primary-search-account-menu';
   const isMenuOpen = Boolean(anchorEl);
@@ -62,49 +63,50 @@ const NavBar = ({ classes, history }) => {
 
   return (
     <div className={classes.wrapper}>
-      <Query query={getUser}>
-        {({ data: { user }, loading, error }) => {
-          if (loading) return <p>Loading...</p>;
-          if (error || !user) return <div> no user found</div>;
-          return (
-            <div>
-              <AppBar position="static">
-                <Toolbar className={classes.topBar}>
-                  <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="Menu"
-                    onClick={goToHome}
-                  >
-                    <HomeIcon />
-                  </IconButton>
-                  <div className={classes.grow} />
-                  <div className={classes.userSection}>
-                    <Typography variant="subtitle1" className={classes.name}>
-                      {user.name}
-                    </Typography>
-                    <IconButton
-                      edge="end"
-                      aria-label="Account of current user"
-                      aria-controls={menuId}
-                      aria-haspopup="true"
-                      onClick={handleProfileMenuOpen}
-                      color="inherit"
-                    >
-                      <AccountCircle />
-                    </IconButton>
+      <div>
+        <AppBar position="static">
+          <Toolbar className={classes.topBar}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="Menu"
+              onClick={goToHome}
+            >
+              <HomeIcon />
+            </IconButton>
+            <div className={classes.grow} />
+            {user && (
+            <div className={classes.userSection}>
+              <Typography variant="subtitle1" className={classes.name}>
+                {user.name}
+              </Typography>
+              <IconButton
+                edge="end"
+                aria-label="Account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
 
-                  </div>
-                </Toolbar>
-              </AppBar>
-              {renderMenu}
             </div>
-          );
-        }}
-      </Query>
+            )}
+          </Toolbar>
+        </AppBar>
+        {renderMenu}
+      </div>
     </div>
   );
 };
+NavBar.propTypes = {
+  classes: shape({}).isRequired,
+  history: shape({}).isRequired,
+  data: shape({
+    user: shape({}),
+  }).isRequired,
+};
 
-
-export default withRouter(withStyles(styles)(NavBar));
+const NavBarContainer = graphql(getUser)(NavBar);
+export default withRouter(withStyles(styles)(NavBarContainer));
