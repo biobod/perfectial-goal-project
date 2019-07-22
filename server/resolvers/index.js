@@ -1,5 +1,5 @@
 const { getUser, getAllUsers, loginUser, verifyUser, userSave } = require('../controllers/userController')
-
+const { getAllEvents, eventCreate, getEvent} = require('../controllers/eventController')
 
 const resolvers = {
   Query: {
@@ -10,6 +10,7 @@ const resolvers = {
   },
   Mutation: {
     saveUser: (root, params) => userSave(params),
+    createEvent: (root, params) => eventCreate(params),
   }
 };
 
