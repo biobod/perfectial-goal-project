@@ -1,7 +1,7 @@
-const mongosse = require('mongoose');
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Schema = mongosse.Schema;
+const Schema = mongoose.Schema;
 
 const SALT_WORK_FACTOR = 10;
 const secretKey = 'app_secret_key';
@@ -56,4 +56,4 @@ UserSchema.methods.comparePassword = function(candidatePassword, id) {
 
 };
 
-module.exports = mongosse.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

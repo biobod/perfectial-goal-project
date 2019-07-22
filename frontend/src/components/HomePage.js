@@ -15,6 +15,10 @@ class HomePage extends Component {
         <div>React Goal Project</div>
         <button type="button" onClick={api.getGraphUser}>get User</button>
         <button type="button" onClick={api.getUsers}>Get all users</button>
+        <div>
+          <button type="button" onClick={api.createEvent}>create event</button>
+          <button type="button" onClick={api.getAllEvents}>getAll events</button>
+        </div>
       </Fragment>
     );
   }

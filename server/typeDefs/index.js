@@ -11,12 +11,12 @@ const EventQQLSchema = `{
     name: String
     description: String
     _id: String
-    start: Date
-    duration: Number
+    start: String
+    duration: Int
     creatorId: String
-    agreedUsers: Array
-    rejectedUsers: Array
-    maybeUsers: Array
+    agreedUsers: [User]
+    rejectedUsers: [User]
+    maybeUsers: [User]
   }`;
 
 const query = `{
@@ -24,11 +24,13 @@ const query = `{
     getUser(_id: String): User
     loginUser(email: String, password: String): User
     verifyUser(_id: String, token: String): User
+    
+    allEvents: [Event]
   }`;
 
 const mutation = `{
     saveUser(email: String!, password: String!, name: String!): User
-    createEvent(name: String!, description: String!, start: Date!, duration: Number!, creatorId: String!): Event
+    createEvent(name: String!, description: String!, start: String!, duration: Int!, creatorId: String!): Event
   }`;
 
 const typeDefs = gql`

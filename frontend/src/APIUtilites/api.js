@@ -79,6 +79,34 @@ class Api {
       .mutate({ mutation: gql`mutation {${method}(email: "${email}", password: "${password}", name: "${name}") { name email _id }}` })
       .then(res => res.data[method]);
   }
+
+  createEvent = () => {
+    const data = {
+      name: 'Test',
+      description: 'bla bla',
+      start: '21-12-2019',
+      duration: 40,
+      creatorId: '5d1e02a722e8b20e89a9738c',
+    };
+    const method = 'createEvent';
+    return client
+      .mutate({
+        mutation: gql`mutation {${method}(
+        name: "${data.name}",
+        description: "${data.description}",
+        start: "${data.start}",
+        duration: ${data.duration},
+        creatorId:"${data.creatorId}"
+        ) { name }}`,
+      })
+      .then(res => res.data[method]);
+  }
+
+  getAllEvents = () => {
+    client
+      .query({ query: gql`{allEvents { name _id description }}` })
+      .then(console.log);
+  }
 }
 
 const api = new Api();
