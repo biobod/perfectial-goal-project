@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { graphql } from 'react-apollo';
-import { shape } from 'prop-types';
+import { shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 
 import { withStyles } from '@material-ui/styles';
-import { getUser } from '../../APIUtilites/clientQuery';
+import { gql } from 'apollo-boost';
 
 const styles = {
   grow: {
@@ -33,7 +33,7 @@ const styles = {
   },
 };
 
-const NavBar = ({ classes, history, data: { user } }) => {
+const NavBar = ({ classes, history, user }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const menuId = 'primary-search-account-menu';
   const isMenuOpen = Boolean(anchorEl);
@@ -103,10 +103,22 @@ const NavBar = ({ classes, history, data: { user } }) => {
 NavBar.propTypes = {
   classes: shape({}).isRequired,
   history: shape({}).isRequired,
-  data: shape({
-    user: shape({}),
+  user: shape({
+    name: string,
   }).isRequired,
 };
 
-const NavBarContainer = graphql(getUser)(NavBar);
+export const getUser = gql`
+    query user {
+        user @client {
+            name
+            _id
+            email
+        }
+    }
+`;
+
+const NavBarContainer = graphql(getUser, {
+  props: ({ data: { user } }) => ({ user }),
+})(NavBar);
 export default withRouter(withStyles(styles)(NavBarContainer));
