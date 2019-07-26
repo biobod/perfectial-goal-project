@@ -10,10 +10,10 @@ const UserQQLSchema = `{
 const EventQQLSchema = `{
     name: String
     description: String
-    _id: String
+    _id: ID
     start: String
     duration: Int
-    creatorId: String
+    creatorId: ID
     agreedUsers: [User]
     rejectedUsers: [User]
     maybeUsers: [User]
@@ -30,7 +30,7 @@ const query = `{
 
 const mutation = `{
     saveUser(email: String!, password: String!, name: String!): User
-    createEvent(name: String!, description: String!, start: String!, duration: Int!, creatorId: String!): Event
+    createEvent(name: String!, description: String!, start: String!, duration: Int!, creatorId: ID!): Event
   }`;
 
 const typeDefs = gql`

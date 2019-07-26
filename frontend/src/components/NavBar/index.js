@@ -44,7 +44,10 @@ const NavBar = ({ classes, history, user }) => {
     history.push('/account_profile');
   };
   const goToHome = () => history.push('/');
-
+  const logOut = () => {
+    localStorage.removeItem('user');
+    handleMenuClose();
+  };
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -56,7 +59,7 @@ const NavBar = ({ classes, history, user }) => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={goToAccountProfile}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={logOut}>Logout</MenuItem>
 
     </Menu>
   );

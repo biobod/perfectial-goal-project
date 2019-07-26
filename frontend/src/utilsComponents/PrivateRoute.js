@@ -19,7 +19,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => (
                 query={verifyUser}
                 variables={{ id: localStorageUser._id, token: localStorageUser.token }}
               >
-                {({ data: { verifyUser: user }, loading, error }) => {
+                {({ data, loading, error }) => {
                   if (loading) return <p>Loading...</p>;
                   if (error) {
                     return (
@@ -30,7 +30,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => (
                       />
                     );
                   }
-                  client.writeData({ data: { user } });
+                  client.writeData({ data: { user: data.verifyUser } });
                   return (
                     <RouteComponent {...props} />
                   );

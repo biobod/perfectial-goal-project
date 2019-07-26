@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
-import LoginPage from './components/LoginPage';
-import SignUpPage from './components/SignUpPage';
+import { LoginPage, SignUpPage } from './components/SignUpAndLoginPages';
 import { client } from './APIUtilites/api';
 import Main from './components/Main';
 
