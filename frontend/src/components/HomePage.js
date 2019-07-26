@@ -1,5 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 import { gql } from 'apollo-boost';
 import { graphql } from 'react-apollo';
 import api from '../APIUtilites/api';
@@ -15,7 +16,7 @@ class HomePage extends Component {
       creatorId: '5d1e02a722e8b20e89a9738c',
     };
     return (
-      <Fragment>
+      <Grid item xs={12}>
         <Link to="/login">Login Page</Link>
         <br />
         <Link to="/signup">Sign up Page</Link>
@@ -26,7 +27,7 @@ class HomePage extends Component {
           <button type="button" onClick={() => mutate({ variables: { ...data } })}>create event</button>
           <button type="button" onClick={api.getAllEvents}>getAll events</button>
         </div>
-      </Fragment>
+      </Grid>
     );
   }
 }
