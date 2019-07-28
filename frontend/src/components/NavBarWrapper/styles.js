@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-const drawerWidth = 200;
+const drawerWidth = 220;
 
 export default makeStyles(theme => ({
   grow: {
@@ -11,6 +11,7 @@ export default makeStyles(theme => ({
   },
   topBar: {
     justifyContent: 'flex-end',
+    paddingLeft: '16px !important',
   },
   userSection: {
     display: 'flex',
@@ -39,7 +40,7 @@ export default makeStyles(theme => ({
     }),
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: 20,
   },
   hide: {
     display: 'none',
@@ -64,9 +65,6 @@ export default makeStyles(theme => ({
     }),
     overflowX: 'hidden',
     width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
-    },
   },
   toolbar: {
     display: 'flex',
@@ -77,8 +75,5 @@ export default makeStyles(theme => ({
   },
   content: props => ({
     marginLeft: props.open ? drawerWidth : (theme.spacing(7) + 1),
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: props.open ? drawerWidth : (theme.spacing(9) + 1),
-    },
   }),
 }));

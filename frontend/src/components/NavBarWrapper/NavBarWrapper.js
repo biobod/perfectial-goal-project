@@ -3,17 +3,15 @@ import { shape, string, node } from 'prop-types';
 import {
   AppBar, Toolbar, Typography, MenuItem, Menu,
   IconButton, ListItem, ListItemIcon, ListItemText, List,
-  useTheme, CssBaseline, Divider,
+  useTheme, CssBaseline, Divider, Drawer, Icon,
 } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import HomeIcon from '@material-ui/icons/Home';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import Drawer from '@material-ui/core/Drawer';
+
+
 import useStyles from './styles';
 
 
@@ -93,7 +91,7 @@ const NavBarWrapper = ({ history, user, children }) => {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <AccountCircle />
+                <Icon>account_circle</Icon>
               </IconButton>
 
             </div>
@@ -115,22 +113,33 @@ const NavBarWrapper = ({ history, user, children }) => {
         </div>
         <Divider />
         <List>
-
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key="create_event">
+            <ListItemIcon><Icon color="secondary">add_circle</Icon></ListItemIcon>
+            <ListItemText primary="Create event" />
+          </ListItem>
+          <ListItem button key="favorite">
+            <ListItemIcon><Icon color="secondary">favorite</Icon></ListItemIcon>
+            <ListItemText primary="Favorite events" />
+          </ListItem>
+          <ListItem button key="my_events">
+            <ListItemIcon><Icon color="secondary">star_alt</Icon></ListItemIcon>
+            <ListItemText primary="My events" />
+          </ListItem>
+          <ListItem button key="maybe_events">
+            <ListItemIcon><Icon>thumbs_up_down</Icon></ListItemIcon>
+            <ListItemText primary="May be events" />
+          </ListItem>
+          <ListItem button key="rejected_events">
+            <ListItemIcon><Icon>cancel</Icon></ListItemIcon>
+            <ListItemText primary="Rejected events" />
+          </ListItem>
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key="Account" onClick={goToAccountProfile}>
+            <ListItemIcon><Icon>account_circle</Icon></ListItemIcon>
+            <ListItemText primary="My account" />
+          </ListItem>
         </List>
       </Drawer>
       {renderMenu}
