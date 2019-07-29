@@ -12,8 +12,9 @@ const EventQQLSchema = `{
     description: String
     _id: ID
     start: String
-    duration: Int
+    end: String
     creatorId: ID
+    contribution: Int
     agreedUsers: [User]
     rejectedUsers: [User]
     maybeUsers: [User]
@@ -30,7 +31,7 @@ const query = `{
 
 const mutation = `{
     saveUser(email: String!, password: String!, name: String!): User
-    createEvent(name: String!, description: String!, start: String!, duration: Int!, creatorId: ID!): Event
+    createEvent(name: String!, description: String!, start: String!, end: String!, creatorId: ID!): Event
   }`;
 
 const typeDefs = gql`

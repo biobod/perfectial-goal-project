@@ -30,10 +30,11 @@ const NavBarWrapper = ({ history, user, children }) => {
   const isMenuOpen = Boolean(anchorEl);
   const handleMenuClose = () => setAnchorEl(null);
   const handleProfileMenuOpen = event => setAnchorEl(event.currentTarget);
-  const goToAccountProfile = () => {
+  const closeAndRedirectToProfile = () => {
     handleMenuClose();
     history.push('/account_profile');
   };
+
   const goToHome = () => history.push('/');
   const logOut = () => {
     localStorage.removeItem('user');
@@ -49,7 +50,7 @@ const NavBarWrapper = ({ history, user, children }) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={goToAccountProfile}>My account</MenuItem>
+      <MenuItem onClick={closeAndRedirectToProfile}>My account</MenuItem>
       <MenuItem onClick={logOut}>Logout</MenuItem>
 
     </Menu>
@@ -113,7 +114,7 @@ const NavBarWrapper = ({ history, user, children }) => {
         </div>
         <Divider />
         <List>
-          <ListItem button key="create_event">
+          <ListItem button key="create_event" onClick={() => history.push('/create_event')}>
             <ListItemIcon><Icon color="secondary">add_circle</Icon></ListItemIcon>
             <ListItemText primary="Create event" />
           </ListItem>
@@ -136,7 +137,7 @@ const NavBarWrapper = ({ history, user, children }) => {
         </List>
         <Divider />
         <List>
-          <ListItem button key="Account" onClick={goToAccountProfile}>
+          <ListItem button key="Account" onClick={() => history.push('/account_profile')}>
             <ListItemIcon><Icon>account_circle</Icon></ListItemIcon>
             <ListItemText primary="My account" />
           </ListItem>

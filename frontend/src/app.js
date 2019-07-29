@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { shape } from 'prop-types';
 import { ApolloProvider } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
 import { client } from './APIUtilites/api';
@@ -9,6 +10,7 @@ import HomePage from './components/HomePage';
 import AccountProfile from './components/AccountProfile';
 import PrivateRoute from './utilsComponents/PrivateRoute';
 import NavBarWrapper from './components/NavBarWrapper/NavBarWrapperContainer';
+import CreateEventPage from './components/CreateEventPage/CreateEventPageContainer';
 
 import './index.css';
 
@@ -35,6 +37,7 @@ class App extends Component {
               <Route exact path="/signup" component={SignUpPage} />
               <NavBarWrapper>
                 <Switch>
+                  <PrivateRoute path="/create_event" component={CreateEventPage} />
                   <PrivateRoute path="/account_profile" component={AccountProfile} />
                   <PrivateRoute path="/all_users" component={AllUsers} />
                   <PrivateRoute exact path="/" component={HomePage} />
@@ -48,5 +51,7 @@ class App extends Component {
     );
   }
 }
-
+App.propTypes = {
+  classes: shape({}).isRequired,
+};
 export default withStyles(styles)(App);
