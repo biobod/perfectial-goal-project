@@ -50,6 +50,7 @@ module.exports = {
     },
     ],
   },
+  node: { fs: 'empty' },
   plugins: [
     new HtmlWebPackPlugin({
       hash: true,

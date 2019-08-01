@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 import {
-  Button, TextField, Grid,
+  Button, TextField, Grid, InputAdornment,
 } from '@material-ui/core';
-import { shape, string } from 'prop-types';
+import fs from 'fs';
+import FormData from 'form-data';
+import { shape, string, func } from 'prop-types';
 import moment from 'moment';
+import { DropzoneArea } from 'material-ui-dropzone';
+import { gql } from 'apollo-boost';
+import axios from 'axios';
+import concat from 'concat-stream';
+import { uri } from '../../../../config/config';
 
 
 class CreateEventPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: '',
       description: '',
       startDate: moment().format('YYYY-MM-DD'),
       endDate: moment().format('YYYY-MM-DD'),
       startTime: '',
+      contribution: 0,
       endTime: '',
+      files: [],
     };
   }
 
@@ -24,15 +33,62 @@ class CreateEventPage extends Component {
     this.setState({ [name]: value });
   }
 
+  uploadFile = files => this.setState({ files })
+
   onSubmit = () => {
-    const { user } = this.props;
+    const { user, mutate } = this.props;
     const {
-      startDate, endDate, startTime, endTime,
+      startDate, endDate, startTime, endTime, name, description, contribution, files,
     } = this.state;
     const validStartDate = `${startDate}T${startTime}`;
     const validEndDate = `${endDate}T${endTime}`;
 
-    console.log(this.state, { user });
+    const createEvent = {
+      query: `
+    mutation createEvent(
+        $name: String!,
+        $description: String!,
+        $start: String!,
+        $end: String!,
+        $creatorId: ID!
+        $contribution: Int!,
+        $image: Upload!
+    ) {
+        createEvent(
+            name: $name,
+            description: $description,
+            start: $start,
+            end: $end,
+            creatorId: $creatorId,
+            contribution: $contribution,
+            image: $image
+        )
+        {
+        name
+        }
+    }`,
+      variables: {
+        name,
+        description,
+        contribution: +contribution,
+        creatorId: user._id,
+        start: validStartDate,
+        end: validEndDate,
+        image: null,
+      },
+    };
+    const map = {
+      6: ['variables.image'],
+    };
+    const fd = new FormData();
+    fd.append('operations', JSON.stringify(createEvent));
+    fd.append('map', JSON.stringify(map));
+    fd.append('6', files[0]);
+
+
+    axios.post(uri, fd).then(console.log);
+
+    // mutate({ variables: { ...dataObj } });
   }
 
   render() {
@@ -139,6 +195,17 @@ class CreateEventPage extends Component {
               onChange={this.onChangeField}
               margin="normal"
               variant="outlined"
+              InputProps={{
+                endAdornment: <InputAdornment position="start">UAH</InputAdornment>,
+              }}
+            />
+          </div>
+          <div className={classes.dateSection}>
+            Upload file
+            <DropzoneArea
+              acceptedFiles={['image/*']}
+              onChange={this.uploadFile}
+              filesLimit={1}
             />
           </div>
           <Button
@@ -158,6 +225,7 @@ class CreateEventPage extends Component {
 
 CreateEventPage.propTypes = {
   classes: shape({}).isRequired,
+  mutate: func.isRequired,
   user: shape({
     id: string,
   }),
