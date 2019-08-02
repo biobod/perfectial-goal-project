@@ -2,6 +2,23 @@ const { getUser, getAllUsers, loginUser, verifyUser, userSave } = require('../co
 const { eventCreate, getAllEvents } = require('../controllers/eventController');
 
 var fs = require('fs');
+const uploadDir = "./uploads";
+
+const storeImage = ({ stream, filename, mimetype, encoding }) => {
+  const id = Date.now();
+  const path = `${uploadDir}/${id}-${filename}`;
+  return new Promise((resolve, reject) =>
+    stream
+    .on("error", error => {
+      if (stream.truncated)
+      // Delete the truncated file
+        fs.unlinkSync(path);
+      reject(error);
+    })
+    .pipe(fs.createWriteStream(path))
+    .on("error", error => reject(error))
+    .on("finish", () => resolve({ path, filename, mimetype, encoding})));
+}
 
 const resolvers = {
   Query: {
@@ -14,12 +31,11 @@ const resolvers = {
   Mutation: {
     saveUser: (root, params) => userSave(params),
     createEvent: async (root, params) => {
-      console.log(params)
       const { image } = params
-      const img = {}
-      img.data = fs.readFileSync(image.name)
-      img.contentType = image.type
-      return eventCreate({...params, image: img})
+      const { createReadStream, filename, mimetype, encoding } = await image;
+      const stream = createReadStream();
+      const validImage = await storeImage({ stream, filename, mimetype, encoding})
+      return eventCreate({...params, image: validImage})
     },
   }
 };

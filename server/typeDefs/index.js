@@ -15,7 +15,7 @@ const EventQQLSchema = `{
     end: String
     creatorId: ID
     contribution: Int
-    image: Upload
+    image: Image
     agreedUsers: [User]
     rejectedUsers: [User]
     maybeUsers: [User]
@@ -38,7 +38,13 @@ const mutation = `{
 const typeDefs = gql`
   type User ${UserQQLSchema}
   type Event ${EventQQLSchema}
- 
+  type Image {
+      _id: ID
+      path:  String!
+      filename: String!
+      mimetype: String
+      encoding: String
+  }
   
   type Query ${query}
   

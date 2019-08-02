@@ -1,9 +1,9 @@
 import ApolloClient, {
-  gql, InMemoryCache, HttpLink, ApolloLink,
+  gql, InMemoryCache, ApolloLink,
 } from 'apollo-boost';
 import { createUploadLink } from 'apollo-upload-client';
 
-// import { onError } from 'apollo-link-error';
+import { onError } from 'apollo-link-error';
 import { uri } from '../../../config/config';
 
 export const cache = new InMemoryCache();
@@ -23,19 +23,18 @@ cache.writeData({
     localStorageUser: { ...getUserFromStorage(), __typename: 'localStorageUser' },
   },
 });
-// const httpLink = new HttpLink({ uri });
-// const errorLink = onError(({ graphQLErrors, networkError }) => {
-//   if (graphQLErrors) {
-//     console.log('graphQLErrors -2ewd', graphQLErrors);
-//   }
-//   if (networkError) {
-//     console.log('networkError-342342323', networkError);
-//   }
-// });
-// const link = ApolloLink.from([errorLink, ]);
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    console.log('graphQLErrors -2ewd', graphQLErrors);
+  }
+  if (networkError) {
+    console.log('networkError-342342323', networkError);
+  }
+});
+const link = ApolloLink.from([errorLink, createUploadLink()]);
 
 export const client = new ApolloClient({
-  cache, uri, link: createUploadLink(),
+  cache, uri, link, resolvers: {},
 });
 
 
@@ -61,7 +60,7 @@ class Api {
 
   getAllEvents = () => {
     client
-      .query({ query: gql`{allEvents { name _id description }}` })
+      .query({ query: gql`{allEvents { name _id description, image { path } }}` })
       .then(console.log);
   }
 }

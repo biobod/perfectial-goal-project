@@ -4,7 +4,6 @@ exports.getAllEvents = async () => await Event.find({});
 exports.getEvent = async (id) => await Event.findById(id);
 
 exports.eventCreate =  async (data) => {
-  console.log('eventCreate', data)
   try {
     return await Event.create(data)
   } catch (error) {

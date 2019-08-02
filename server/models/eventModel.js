@@ -15,8 +15,10 @@ const EventSchema = new Schema({
   rejectedUsers: [ObjectId],
   maybeUsers: [ObjectId],
   image: {
-    data: Buffer,
-    contentType: String,
+    path: { type: String, required: true },
+    filename: { type: String, required: true },
+    mimetype: { type: String, required: true },
+    encoding:  { type: String, required: true },
   },
 })
 

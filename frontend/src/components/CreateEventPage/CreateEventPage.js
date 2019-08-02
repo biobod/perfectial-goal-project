@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import {
   Button, TextField, Grid, InputAdornment,
 } from '@material-ui/core';
-import fs from 'fs';
 import FormData from 'form-data';
 import { shape, string, func } from 'prop-types';
 import moment from 'moment';
 import { DropzoneArea } from 'material-ui-dropzone';
-import { gql } from 'apollo-boost';
 import axios from 'axios';
-import concat from 'concat-stream';
 import { uri } from '../../../../config/config';
 
 
