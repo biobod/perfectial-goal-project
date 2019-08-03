@@ -11,6 +11,7 @@ import AccountProfile from './components/AccountProfile';
 import PrivateRoute from './utilsComponents/PrivateRoute';
 import NavBarWrapper from './components/NavBarWrapper/NavBarWrapperContainer';
 import CreateEventPage from './components/CreateEventPage/CreateEventPageContainer';
+import MyEventsPage from './components/MyEventsPage/MyEventsPageContainer';
 
 import './index.css';
 
@@ -38,6 +39,7 @@ class App extends Component {
               <NavBarWrapper>
                 <Switch>
                   <PrivateRoute path="/create_event" component={CreateEventPage} />
+                  <PrivateRoute path="/my_events" component={MyEventsPage} />
                   <PrivateRoute path="/account_profile" component={AccountProfile} />
                   <PrivateRoute path="/all_users" component={AllUsers} />
                   <PrivateRoute exact path="/" component={HomePage} />

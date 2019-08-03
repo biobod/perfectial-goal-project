@@ -30,9 +30,10 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => (
                       />
                     );
                   }
-                  client.writeData({ data: { user: data.verifyUser } });
+                  const user = data.verifyUser;
+                  client.writeData({ data: { user } });
                   return (
-                    <RouteComponent {...props} />
+                    <RouteComponent user={user} {...props} />
                   );
                 }}
               </Query>

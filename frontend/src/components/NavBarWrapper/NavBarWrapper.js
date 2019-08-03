@@ -19,8 +19,6 @@ const NavBarWrapper = ({ history, user, children }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = React.useState(false);
-
-
   const classes = useStyles({ open });
 
   const handleDrawerOpen = () => setOpen(true);
@@ -118,13 +116,13 @@ const NavBarWrapper = ({ history, user, children }) => {
             <ListItemIcon><Icon color="secondary">add_circle</Icon></ListItemIcon>
             <ListItemText primary="Create event" />
           </ListItem>
+          <ListItem button key="my_events" onClick={() => history.push('/my_events')}>
+            <ListItemIcon><Icon color="secondary">star_alt</Icon></ListItemIcon>
+            <ListItemText primary="My events" />
+          </ListItem>
           <ListItem button key="favorite">
             <ListItemIcon><Icon color="secondary">favorite</Icon></ListItemIcon>
             <ListItemText primary="Favorite events" />
-          </ListItem>
-          <ListItem button key="my_events">
-            <ListItemIcon><Icon color="secondary">star_alt</Icon></ListItemIcon>
-            <ListItemText primary="My events" />
           </ListItem>
           <ListItem button key="maybe_events">
             <ListItemIcon><Icon>thumbs_up_down</Icon></ListItemIcon>

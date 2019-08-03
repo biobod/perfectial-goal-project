@@ -1,8 +1,9 @@
 import { gql } from 'apollo-boost';
 import { graphql, compose } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
-import CreateEventPage from './CreateEventPage';
-import styles from './styles';
+import MyEventsPage from './MyEventsPage';
+
+const styles = {}
 
 const getUserId = gql`
     query user {
@@ -12,8 +13,8 @@ const getUserId = gql`
     }
 `;
 
-const CreateEventPageContainer = compose(
+const MyEventsPageContainer = compose(
   graphql(getUserId, { props: ({ data }) => ({ user: data.user }) }),
-)(CreateEventPage);
+)(MyEventsPage);
 
-export default withStyles(styles)(CreateEventPage);
+export default withStyles(styles)(MyEventsPage);

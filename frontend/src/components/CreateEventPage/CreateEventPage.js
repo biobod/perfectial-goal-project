@@ -3,12 +3,35 @@ import {
   Button, TextField, Grid, InputAdornment,
 } from '@material-ui/core';
 import FormData from 'form-data';
-import { shape, string, func } from 'prop-types';
+import { shape, string } from 'prop-types';
 import moment from 'moment';
 import { DropzoneArea } from 'material-ui-dropzone';
 import axios from 'axios';
 import { uri } from '../../../../config/config';
 
+const createEventQuery = `
+  mutation createEvent(
+      $name: String!,
+      $description: String!,
+      $start: String!,
+      $end: String!,
+      $creatorId: ID!
+      $contribution: Int!,
+      $image: Upload!
+  ) {
+      createEvent(
+          name: $name,
+          description: $description,
+          start: $start,
+          end: $end,
+          creatorId: $creatorId,
+          contribution: $contribution,
+          image: $image
+      )
+      {
+      name
+      }
+  }`;
 
 class CreateEventPage extends Component {
   constructor(props) {
@@ -33,37 +56,14 @@ class CreateEventPage extends Component {
   uploadFile = files => this.setState({ files })
 
   onSubmit = () => {
-    const { user, mutate } = this.props;
+    const { user } = this.props;
     const {
       startDate, endDate, startTime, endTime, name, description, contribution, files,
     } = this.state;
     const validStartDate = `${startDate}T${startTime}`;
     const validEndDate = `${endDate}T${endTime}`;
-
     const createEvent = {
-      query: `
-    mutation createEvent(
-        $name: String!,
-        $description: String!,
-        $start: String!,
-        $end: String!,
-        $creatorId: ID!
-        $contribution: Int!,
-        $image: Upload!
-    ) {
-        createEvent(
-            name: $name,
-            description: $description,
-            start: $start,
-            end: $end,
-            creatorId: $creatorId,
-            contribution: $contribution,
-            image: $image
-        )
-        {
-        name
-        }
-    }`,
+      query: createEventQuery,
       variables: {
         name,
         description,
@@ -84,8 +84,6 @@ class CreateEventPage extends Component {
 
 
     axios.post(uri, fd).then(console.log);
-
-    // mutate({ variables: { ...dataObj } });
   }
 
   render() {
@@ -107,6 +105,7 @@ class CreateEventPage extends Component {
             label="Title"
             fullWidth
             name="name"
+            required
             value={name}
             onChange={this.onChangeField}
             margin="normal"
@@ -119,6 +118,7 @@ class CreateEventPage extends Component {
             value={description}
             onChange={this.onChangeField}
             multiline
+            required
             rowsMax="4"
             fullWidth
             margin="normal"
@@ -129,6 +129,7 @@ class CreateEventPage extends Component {
               label="Start date"
               type="date"
               name="startDate"
+              required
               value={startDate}
               onChange={this.onChangeField}
               margin="normal"
@@ -139,6 +140,7 @@ class CreateEventPage extends Component {
             />
             <TextField
               label="Start time"
+              required
               type="time"
               name="startTime"
               onChange={this.onChangeField}
@@ -159,6 +161,7 @@ class CreateEventPage extends Component {
               type="date"
               name="endDate"
               value={endDate}
+              required
               onChange={this.onChangeField}
               margin="normal"
               variant="outlined"
@@ -171,6 +174,7 @@ class CreateEventPage extends Component {
               type="time"
               margin="normal"
               variant="outlined"
+              required
               name="endTime"
               value={endTime}
               onChange={this.onChangeField}
@@ -222,7 +226,6 @@ class CreateEventPage extends Component {
 
 CreateEventPage.propTypes = {
   classes: shape({}).isRequired,
-  mutate: func.isRequired,
   user: shape({
     id: string,
   }),
