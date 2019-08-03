@@ -3,18 +3,31 @@ import { graphql, compose } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
 import MyEventsPage from './MyEventsPage';
 
-const styles = {}
+const styles = {};
 
-const getUserId = gql`
-    query user {
-        user @client {
-            _id
+const onGetUserEvents = gql`
+    query getUserEvents($userId: String!) {
+        getUserEvents(userId: $userId) {
+        name
+        description
+        start
+        end
+        contribution
+        image {
+            path
+            filename
+        }
         }
     }
 `;
 
 const MyEventsPageContainer = compose(
-  graphql(getUserId, { props: ({ data }) => ({ user: data.user }) }),
+  graphql(onGetUserEvents, {
+    options: props => ({
+      variables: { userId: props.user._id },
+    }),
+    props: ({ data: { getUserEvents, error, loading } }) => ({ events: getUserEvents, error, loading }),
+  }),
 )(MyEventsPage);
 
-export default withStyles(styles)(MyEventsPage);
+export default withStyles(styles)(MyEventsPageContainer);

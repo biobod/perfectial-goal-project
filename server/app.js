@@ -25,6 +25,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
+app.use('/uploads', express.static(__dirname + '/uploads'));
 server.applyMiddleware({ app, path: graphqlPath });
 
 app.listen(port, () => console.log(`Server is running on port ${port}${server.graphqlPath}`))

@@ -23,9 +23,10 @@ const EventQQLSchema = `{
 
 const query = `{
     users: [User]
-    getUser(_id: String): User
-    loginUser(email: String, password: String): User
-    verifyUser(_id: String, token: String): User
+    getUser(_id: String!): User
+    loginUser(email: String!, password: String!): User
+    verifyUser(_id: String!, token: String!): User
+    getUserEvents(userId: String!): [Event]
    
     allEvents: [Event]
   }`;
