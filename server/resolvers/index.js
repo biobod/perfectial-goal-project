@@ -1,5 +1,5 @@
 const { getUser, getAllUsers, loginUser, verifyUser, userSave } = require('../controllers/userController');
-const { eventCreate, getAllEvents, getUserEvents } = require('../controllers/eventController');
+const { eventCreate, getAllEvents, getUserEvents, getEvent } = require('../controllers/eventController');
 
 var fs = require('fs');
 const uploadDir = "./uploads";
@@ -28,6 +28,7 @@ const resolvers = {
     loginUser: (root, params) => loginUser(params),
     verifyUser: (root, params) => verifyUser(params),
     getUserEvents: (root, {userId}) => getUserEvents(userId),
+    getEvent: (root, {eventId}) => getEvent(eventId),
   },
   Mutation: {
     saveUser: (root, params) => userSave(params),

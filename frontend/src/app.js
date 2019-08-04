@@ -12,7 +12,7 @@ import PrivateRoute from './utilsComponents/PrivateRoute';
 import NavBarWrapper from './components/NavBarWrapper/NavBarWrapperContainer';
 import CreateEventPage from './components/CreateEventPage/CreateEventPageContainer';
 import MyEventsPage from './components/MyEventsPage/MyEventsPageContainer';
-
+import EventDetailsPage from './components/EventDetailsPage/EventDetailsPageContainer';
 import './index.css';
 
 
@@ -42,6 +42,7 @@ class App extends Component {
                   <PrivateRoute path="/my_events" component={MyEventsPage} />
                   <PrivateRoute path="/account_profile" component={AccountProfile} />
                   <PrivateRoute path="/all_users" component={AllUsers} />
+                  <PrivateRoute path="/event_detail/:eventId" component={EventDetailsPage} />
                   <PrivateRoute exact path="/" component={HomePage} />
                 </Switch>
               </NavBarWrapper>

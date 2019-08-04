@@ -7,7 +7,7 @@ export default makeStyles(theme => ({
     flexGrow: 1,
   },
   wrapper: {
-    // display: 'flex',
+    backgroundColor: 'inherit',
   },
   topBar: {
     justifyContent: 'flex-end',
@@ -46,7 +46,7 @@ export default makeStyles(theme => ({
     display: 'none',
   },
   drawer: {
-    marginTop: 64,
+    marginTop: 24,
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',

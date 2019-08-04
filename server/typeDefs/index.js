@@ -27,6 +27,7 @@ const query = `{
     loginUser(email: String!, password: String!): User
     verifyUser(_id: String!, token: String!): User
     getUserEvents(userId: String!): [Event]
+    getEvent(eventId: String!): Event
    
     allEvents: [Event]
   }`;

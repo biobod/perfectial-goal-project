@@ -3,7 +3,21 @@ import { graphql, compose } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
 import MyEventsPage from './MyEventsPage';
 
-const styles = {};
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+  },
+  gridList: {
+      width: '90%',
+    textAlign: 'left',
+  },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
+  },
+};
 
 const onGetUserEvents = gql`
     query getUserEvents($userId: String!) {
@@ -13,6 +27,7 @@ const onGetUserEvents = gql`
         start
         end
         contribution
+        _id
         image {
             path
             filename
