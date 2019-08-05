@@ -11,11 +11,23 @@ const styles = {
     overflow: 'hidden',
   },
   gridList: {
-      width: '90%',
+    width: '90%',
     textAlign: 'left',
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
+  },
+  description: {
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+  },
+  eventCard: {
+    opacity: 0.85,
+    border: '2px solid transparent',
+  },
+  hoveredEvent: {
+    cursor: 'pointer',
+    opacity: 1,
   },
 };
 

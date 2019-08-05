@@ -5,6 +5,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-underscore-dangle": 0,
     "react/prefer-stateless-function": 0,
+    "react/jsx-one-expression-per-line": 0
   },
   "env": {
     "browser": true,

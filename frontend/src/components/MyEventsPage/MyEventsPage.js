@@ -2,21 +2,26 @@ import React, { Component } from 'react';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import { Icon } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { createPath } from '../helpers';
 
-const createPath = (path) => {
-  const name = path.split('./')[1];
-  return `http://localhost:3000/${name}`;
-};
 
 class MyEventsPage extends Component {
+  constructor() {
+    super();
+    this.state = {
+      hoveredEvent: null,
+    };
+  }
+
+  onHover = id => this.setState({ hoveredEvent: id })
+
   render() {
     const {
       error, events, loading, classes, history,
     } = this.props;
-
+    const { hoveredEvent } = this.state;
     if (loading) {
       return <div> loading </div>;
     }
@@ -29,28 +34,26 @@ class MyEventsPage extends Component {
         </div>
       );
     }
+
     return (
       <div className={classes.root}>
         <GridList cellHeight={300} className={classes.gridList}>
           {events.map(event => (
-            <GridListTile key={event._id}>
+            <GridListTile
+              className={event._id === hoveredEvent ? classes.hoveredEvent : classes.eventCard}
+              key={event._id}
+              onMouseEnter={() => this.onHover(event._id)}
+              onMouseLeave={() => this.onHover(null)}
+              onClick={() => history.push(`/event_detail/${event._id}`)}
+            >
               <img src={createPath(event.image.path)} alt={event.image.filename} />
               <GridListTileBar
                 title={event.name}
                 subtitle={(
                   <span>
-                    <div>{event.description}</div>
-                    <div>{event.start}</div>
+                    <div>Start at: {moment(event.start).format('dddd, MMMM Do YYYY, h:mm')}</div>
+                    <div className={classes.description}>{event.description}</div>
                   </span>
-                )}
-                actionIcon={(
-                  <IconButton
-                    aria-label={`info about ${event.name}`}
-                    className={classes.icon}
-                    onClick={() => history.push(`/event_detail/${event._id}`)}
-                  >
-                    <Icon>info</Icon>
-                  </IconButton>
                 )}
               />
             </GridListTile>
