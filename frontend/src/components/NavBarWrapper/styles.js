@@ -24,7 +24,7 @@ export default makeStyles(theme => ({
     display: 'flex',
   },
   appBar: {
-    position: 'relative',
+    position: 'fixed',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -46,7 +46,6 @@ export default makeStyles(theme => ({
     display: 'none',
   },
   drawer: {
-    marginTop: 24,
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
@@ -74,6 +73,7 @@ export default makeStyles(theme => ({
     ...theme.mixins.toolbar,
   },
   content: props => ({
+    paddingTop: 85,
     marginLeft: props.open ? drawerWidth : (theme.spacing(7) + 1),
   }),
 }));
