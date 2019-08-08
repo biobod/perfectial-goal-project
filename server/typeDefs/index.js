@@ -27,6 +27,7 @@ const query = `{
     loginUser(email: String!, password: String!): User
     verifyUser(_id: String!, token: String!): User
     getUserEvents(userId: String!): [Event]
+    getUserEventsByType(userId: String!, type: String!): [Event]
     getEvent(eventId: String!): Event
    
     allEvents: [Event]
@@ -35,6 +36,7 @@ const query = `{
 const mutation = `{
     saveUser(email: String!, password: String!, name: String!): User
     createEvent(name: String!, description: String!, start: String!, end: String!, creatorId: ID!, contribution: Int!, image: Upload!): Event
+    addUserToEvent(userId:  ID!, eventId: ID!, type: String!): Event
   }`;
 
 const typeDefs = gql`

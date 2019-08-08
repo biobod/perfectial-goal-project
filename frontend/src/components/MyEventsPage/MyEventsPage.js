@@ -23,7 +23,10 @@ class MyEventsPage extends Component {
       );
     }
     return (
-      <CardsView events={events} history={history} userName="Adam" />
+      <div>
+        <h2>My events </h2>
+        <CardsView events={events} history={history} userName="Adam" />
+      </div>
     );
   }
 }

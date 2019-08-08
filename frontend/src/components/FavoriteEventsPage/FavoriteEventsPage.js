@@ -16,13 +16,15 @@ class FavoriteEventsPage extends Component {
     if (!events || !events.length) {
       return (
         <div>
-          You are not have events.
-          <Link to="/create_event">Create your first event</Link>
+          You are not have favorite events.
         </div>
       );
     }
     return (
-      <CardsView events={events} history={history} userName="Adam" />
+      <div>
+        <h2>Favorite Events </h2>
+        <CardsView events={events} history={history} userName="Adam" />
+      </div>
     );
   }
 }

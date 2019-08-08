@@ -1,5 +1,12 @@
 const { getUser, getAllUsers, loginUser, verifyUser, userSave } = require('../controllers/userController');
-const { eventCreate, getAllEvents, getUserEvents, getEvent } = require('../controllers/eventController');
+const {
+  eventCreate,
+  getAllEvents,
+  getUserEvents,
+  getEvent,
+  getUserEventsByType,
+  addUserToEvent,
+} = require('../controllers/eventController');
 
 var fs = require('fs');
 const uploadDir = "./uploads";
@@ -28,6 +35,7 @@ const resolvers = {
     loginUser: (root, params) => loginUser(params),
     verifyUser: (root, params) => verifyUser(params),
     getUserEvents: (root, {userId}) => getUserEvents(userId),
+    getUserEventsByType: (root, {userId, type}) => getUserEventsByType({ userId, type }),
     getEvent: (root, {eventId}) => getEvent(eventId),
   },
   Mutation: {
@@ -39,6 +47,7 @@ const resolvers = {
       const validImage = await storeImage({ stream, filename, mimetype, encoding})
       return eventCreate({...params, image: validImage})
     },
+    addUserToEvent: (root, params) => addUserToEvent(params),
   }
 };
 

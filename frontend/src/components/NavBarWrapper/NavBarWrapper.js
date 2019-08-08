@@ -37,6 +37,7 @@ const NavBarWrapper = ({ history, user, children }) => {
   const logOut = () => {
     localStorage.removeItem('user');
     handleMenuClose();
+    history.push('/login');
   };
   const renderMenu = (
     <Menu
