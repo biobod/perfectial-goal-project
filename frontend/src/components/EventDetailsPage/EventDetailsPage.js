@@ -19,7 +19,7 @@ class EventDetailsPage extends Component {
     const duration = moment
       .duration(moment(event.end, 'YYYY/MM/DD HH:mm')
         .diff(moment(event.start, 'YYYY/MM/DD HH:mm'))).asHours();
-    console.log(duration);
+
     return (
       <div className={classes.root}>
         <h2>{event.name}</h2>

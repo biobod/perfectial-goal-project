@@ -6,9 +6,13 @@ import MyEventsPage from './MyEventsPage';
 const styles = {
   root: {
     display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'start',
+    flexFlow: 'row wrap',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
+    alignContent: 'flex-end',
+    padding: 5,
   },
   gridList: {
     width: '90%',
@@ -20,6 +24,10 @@ const styles = {
   description: {
     textOverflow: 'ellipsis',
     overflow: 'hidden',
+  },
+  content: {
+    height: 60,
+    whiteSpace: 'nowrap',
   },
   eventCard: {
     opacity: 0.85,

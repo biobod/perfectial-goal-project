@@ -19,7 +19,7 @@ class MyEventsPage extends Component {
 
   render() {
     const {
-      error, events, loading, classes, history,
+      error, events, loading, classes, history, user,
     } = this.props;
     const { hoveredEvent } = this.state;
     if (loading) {
