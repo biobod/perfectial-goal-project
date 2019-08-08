@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+import { Icon } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
 import moment from 'moment';
-import { createPath } from '../helpers';
 
+const createPath = (path) => {
+  const name = path.split('./')[1];
+  return `http://localhost:3000/${name}`;
+};
+
+const dateFormat = 'dddd, MMMM Do YYYY, h:mm';
 
 class MyEventsPage extends Component {
-  constructor() {
-    super();
-    this.state = {
-      hoveredEvent: null,
-    };
-  }
-
-  onHover = id => this.setState({ hoveredEvent: id })
-
   render() {
     const {
       error, events, loading, classes, history, user,
     } = this.props;
-    const { hoveredEvent } = this.state;
+
     if (loading) {
       return <div> loading </div>;
     }
@@ -34,31 +35,41 @@ class MyEventsPage extends Component {
         </div>
       );
     }
-
     return (
       <div className={classes.root}>
-        <GridList cellHeight={300} className={classes.gridList}>
-          {events.map(event => (
-            <GridListTile
-              className={event._id === hoveredEvent ? classes.hoveredEvent : classes.eventCard}
-              key={event._id}
-              onMouseEnter={() => this.onHover(event._id)}
-              onMouseLeave={() => this.onHover(null)}
-              onClick={() => history.push(`/event_detail/${event._id}`)}
-            >
-              <img src={createPath(event.image.path)} alt={event.image.filename} />
-              <GridListTileBar
-                title={event.name}
-                subtitle={(
-                  <span>
-                    <div>Start at: {moment(event.start).format('dddd, MMMM Do YYYY, h:mm')}</div>
-                    <div className={classes.description}>{event.description}</div>
-                  </span>
-                )}
-              />
-            </GridListTile>
-          ))}
-        </GridList>
+        {events.map(event => (
+          <Card className={classes.card}>
+            <CardHeader
+              avatar={(<Avatar aria-label="recipe" className={classes.avatar}>{user.name.charAt(0).toUpperCase()}</Avatar>)}
+              title={event.name}
+              subheader={moment(event.start).format(dateFormat)}
+            />
+            <CardMedia
+              className={classes.media}
+              image={createPath(event.image.path)}
+              title={event.name}
+            />
+            <CardContent className={classes.content}>
+              <div className={classes.description}>
+                {event.description}
+              </div>
+            </CardContent>
+            <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites">
+                <Icon>favorite</Icon>
+              </IconButton>
+              <IconButton aria-label="maybe">
+                <Icon>thumbs_up_down</Icon>
+              </IconButton>
+              <IconButton aria-label="cancel">
+                <Icon>cancel</Icon>
+              </IconButton>
+              <IconButton aria-label="info" className={classes.infoIcon}>
+                <Icon onClick={() => history.push(`/event_detail/${event._id}`)}>info</Icon>
+              </IconButton>
+            </CardActions>
+          </Card>
+        ))}
       </div>
     );
   }

@@ -37,6 +37,21 @@ const styles = {
     cursor: 'pointer',
     opacity: 1,
   },
+
+  card: {
+    width: 345,
+    margin: 5,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%',
+  },
+  avatar: {
+    backgroundColor: 'red',
+  },
+  infoIcon: {
+    marginLeft: 'auto',
+  },
 };
 
 const onGetUserEvents = gql`
