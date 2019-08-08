@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { shape, bool, arrayOf } from 'prop-types';
+import { arrayOf, bool, shape } from 'prop-types';
 import CardsView from '../../common/CardsView';
 
-
-class MyEventsPage extends Component {
+class FavoriteEventsPage extends Component {
   render() {
     const {
       error, events, loading, history,
@@ -17,7 +16,7 @@ class MyEventsPage extends Component {
     if (!events || !events.length) {
       return (
         <div>
-        You are not have events.
+          You are not have events.
           <Link to="/create_event">Create your first event</Link>
         </div>
       );
@@ -27,16 +26,15 @@ class MyEventsPage extends Component {
     );
   }
 }
-
-MyEventsPage.propTypes = {
+FavoriteEventsPage.propTypes = {
   events: arrayOf(shape({})),
   history: shape({}).isRequired,
   error: shape({}),
   loading: bool.isRequired,
 };
-MyEventsPage.defaultProps = {
+FavoriteEventsPage.defaultProps = {
   error: null,
   events: [],
 };
 
-export default MyEventsPage;
+export default FavoriteEventsPage;

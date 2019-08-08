@@ -120,7 +120,7 @@ const NavBarWrapper = ({ history, user, children }) => {
             <ListItemIcon><Icon color="secondary">star_alt</Icon></ListItemIcon>
             <ListItemText primary="My events" />
           </ListItem>
-          <ListItem button key="favorite">
+          <ListItem button key="favorite" onClick={() => history.push('/favorite_events')}>
             <ListItemIcon><Icon color="secondary">favorite</Icon></ListItemIcon>
             <ListItemText primary="Favorite events" />
           </ListItem>
