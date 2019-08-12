@@ -1,7 +1,7 @@
-import { gql } from 'apollo-boost';
 import { graphql, compose } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
 import EventDetailsPage from './EventDetailsPage';
+import { onGetEvent } from '../../APIUtilites/apiQuery';
 
 const styles = {
   root: {
@@ -24,25 +24,9 @@ const styles = {
     marginTop: 20,
     display: 'flex',
     justifyContent: 'space-around',
-  }
+  },
 };
 
-const onGetEvent = gql`
-    query getEvent($eventId: String!) {
-             getEvent(eventId: $eventId) {
-            name
-            description
-            start
-            end
-            contribution
-             creatorId
-            image {
-                path
-                filename
-            }
-        }
-    }
-`;
 
 const EventDetailsPageContainer = compose(
   graphql(onGetEvent, {

@@ -1,7 +1,7 @@
-import { gql } from 'apollo-boost';
 import { graphql, compose } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
 import CardsView from './CardsView';
+import { onAddUserToEvent } from '../../APIUtilites/apiQuery';
 
 const styles = {
   root: {
@@ -53,26 +53,6 @@ const styles = {
     marginLeft: 'auto',
   },
 };
-const onAddUserToEvent = gql`
-    mutation addUserToEvent($userId:  ID!, $eventId: ID!, $type: String!) {
-        addUserToEvent(userId: $userId, eventId: $eventId, type: $type) {
-            name
-            description
-            start
-            end
-            contribution
-            _id
-            agreedUsers
-            rejectedUsers
-            creatorId
-            maybeUsers
-            image {
-                path
-                filename
-            }
-        }
-    }
-`;
 
 const CardsViewContainer = compose(graphql(onAddUserToEvent))(CardsView);
 

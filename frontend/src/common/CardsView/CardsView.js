@@ -8,11 +8,11 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import moment from 'moment';
-import { withStyles } from '@material-ui/styles';
 import {
   shape, string, arrayOf, func,
 } from 'prop-types';
 import { eventUserActions } from '../../constants/enums';
+import { onGetEvent } from '../../APIUtilites/apiQuery';
 
 const { AGREE, CANCEL, MAYBE } = eventUserActions;
 
@@ -26,19 +26,12 @@ const dateFormat = 'dddd, MMMM Do YYYY, h:mm';
 const getColor = (userId, usersArray) => (usersArray.includes(userId) ? 'secondary' : '');
 
 class CardsView extends Component {
-  addToFavorites = (eventId) => {
+  addUserToEvent = (eventId, type) => {
     const { mutate, user } = this.props;
-    mutate({ variables: { userId: user._id, eventId, type: AGREE } });
-  }
-
-  addToMaybe = (eventId) => {
-    const { mutate, user } = this.props;
-    mutate({ variables: { userId: user._id, eventId, type: MAYBE } });
-  }
-
-  addToRejected = (eventId) => {
-    const { mutate, user } = this.props;
-    mutate({ variables: { userId: user._id, eventId, type: CANCEL } });
+    mutate({
+      variables: { userId: user._id, eventId, type },
+      refetchQueries: [{ query: onGetEvent, variables: { eventId } }],
+    });
   }
 
   render() {
@@ -66,13 +59,13 @@ class CardsView extends Component {
               </div>
             </CardContent>
             <CardActions disableSpacing>
-              <IconButton color={getColor(user._id, event.agreedUsers)} aria-label="add to favorites" onClick={() => this.addToFavorites(event._id)}>
+              <IconButton color={getColor(user._id, event.agreedUsers)} aria-label="add to favorites" onClick={() => this.addUserToEvent(event._id, AGREE)}>
                 <Icon>favorite</Icon>
               </IconButton>
-              <IconButton color={getColor(user._id, event.maybeUsers)} aria-label="maybe" onClick={() => this.addToMaybe(event._id)}>
+              <IconButton color={getColor(user._id, event.maybeUsers)} aria-label="maybe" onClick={() => this.addUserToEvent(event._id, MAYBE)}>
                 <Icon>thumbs_up_down</Icon>
               </IconButton>
-              <IconButton aria-label="cancel" color={getColor(user._id, event.rejectedUsers)} onClick={() => this.addToRejected(event._id)}>
+              <IconButton aria-label="cancel" color={getColor(user._id, event.rejectedUsers)} onClick={() => this.addUserToEvent(event._id, CANCEL)}>
                 <Icon>cancel</Icon>
               </IconButton>
               <IconButton aria-label="info" className={classes.infoIcon} onClick={() => history.push(`/event_detail/${event._id}`)}>
