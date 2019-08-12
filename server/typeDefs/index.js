@@ -16,9 +16,9 @@ const EventQQLSchema = `{
     creatorId: ID
     contribution: Int
     image: Image
-    agreedUsers: [User]
-    rejectedUsers: [User]
-    maybeUsers: [User]
+    agreedUsers: [ID]
+    rejectedUsers: [ID]
+    maybeUsers: [ID]
   }`;
 
 const query = `{

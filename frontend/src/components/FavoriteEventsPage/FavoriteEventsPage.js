@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { arrayOf, bool, shape } from 'prop-types';
-import CardsView from '../../common/CardsView';
+import CardsView from '../../common/CardsView/CardsViewContainer';
 
 class FavoriteEventsPage extends Component {
   render() {
     const {
-      error, events, loading, history,
+      error, events, loading, history, user,
     } = this.props;
 
     if (loading) {
@@ -23,7 +22,7 @@ class FavoriteEventsPage extends Component {
     return (
       <div>
         <h2>Favorite Events </h2>
-        <CardsView events={events} history={history} userName="Adam" />
+        <CardsView events={events} history={history} authorName="Adam" user={user} />
       </div>
     );
   }
@@ -33,6 +32,7 @@ FavoriteEventsPage.propTypes = {
   history: shape({}).isRequired,
   error: shape({}),
   loading: bool.isRequired,
+  user: shape({}).isRequired,
 };
 FavoriteEventsPage.defaultProps = {
   error: null,

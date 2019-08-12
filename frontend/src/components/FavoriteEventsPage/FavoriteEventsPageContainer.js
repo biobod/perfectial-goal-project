@@ -16,6 +16,9 @@ const onGeFavoriteEvents = gql`
             contribution
             creatorId
             _id
+            agreedUsers
+            rejectedUsers
+            maybeUsers
             image {
                 path
                 filename
@@ -29,7 +32,7 @@ const FavoriteEventsPageContainer = compose(
     options: props => ({
       variables: { userId: props.user._id, type: eventUserActions.AGREE },
     }),
-    props: ({ data: { getFavoriteEvents, error, loading } }) => ({ events: getFavoriteEvents, error, loading }),
+    props: ({ data: { getUserEventsByType, error, loading } }) => ({ events: getUserEventsByType, error, loading }),
   }),
 )(FavoriteEventsPage);
 

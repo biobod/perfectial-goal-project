@@ -1,46 +1,40 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { shape, bool, arrayOf } from 'prop-types';
+import { arrayOf, bool, shape } from 'prop-types';
 import CardsView from '../../common/CardsView/CardsViewContainer';
 
-
-class MyEventsPage extends Component {
+class HomePage extends Component {
   render() {
     const {
       error, events, loading, history, user,
     } = this.props;
-
     if (loading) {
       return <div> loading </div>;
     }
     if (error) return <div>{error.message}</div>;
-    if (!events || !events.length) {
-      return (
-        <div>
-        You are not have events.
-          <Link to="/create_event">Create your first event</Link>
-        </div>
-      );
-    }
     return (
       <div>
-        <h2>My events </h2>
-        <CardsView events={events} history={history} authorName={user.name} user={user} />
+        <h2>All Future Events</h2>
+        <CardsView events={events} history={history} authorName="Adam" user={user} />
+        <Link to="/login">Login Page</Link>
+        <br />
+        <Link to="/signup">Sign up Page</Link>
+        <br />
+        <Link to="/all_users">All users page</Link>
       </div>
     );
   }
 }
-
-MyEventsPage.propTypes = {
+HomePage.propTypes = {
   events: arrayOf(shape({})),
   history: shape({}).isRequired,
   error: shape({}),
   loading: bool.isRequired,
   user: shape({}).isRequired,
 };
-MyEventsPage.defaultProps = {
+HomePage.defaultProps = {
   error: null,
   events: [],
 };
 
-export default MyEventsPage;
+export default HomePage;

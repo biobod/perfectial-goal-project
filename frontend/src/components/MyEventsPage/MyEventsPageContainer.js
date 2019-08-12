@@ -13,6 +13,10 @@ const onGetUserEvents = gql`
         end
         contribution
         _id
+        creatorId
+        agreedUsers
+        rejectedUsers
+        maybeUsers
         image {
             path
             filename

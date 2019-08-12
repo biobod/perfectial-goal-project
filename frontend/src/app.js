@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/styles';
 import { client } from './APIUtilites/api';
 import { LoginPage, SignUpPage } from './components/SignUpAndLoginPages';
 import AllUsers from './components/AllUsers';
-import HomePage from './components/HomePage';
+import HomePage from './components/HomePage/HomePageContainer';
 import AccountProfile from './components/AccountProfile';
 import PrivateRoute from './utilsComponents/PrivateRoute';
 import NavBarWrapper from './components/NavBarWrapper/NavBarWrapperContainer';

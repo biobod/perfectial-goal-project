@@ -9,7 +9,12 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import moment from 'moment';
 import { withStyles } from '@material-ui/styles';
-import { shape, string, arrayOf } from 'prop-types';
+import {
+  shape, string, arrayOf, func,
+} from 'prop-types';
+import { eventUserActions } from '../../constants/enums';
+
+const { AGREE, CANCEL, MAYBE } = eventUserActions;
 
 const createPath = (path) => {
   const name = path.split('./')[1];
@@ -18,10 +23,27 @@ const createPath = (path) => {
 
 const dateFormat = 'dddd, MMMM Do YYYY, h:mm';
 
+const getColor = (userId, usersArray) => (usersArray.includes(userId) ? 'secondary' : '');
+
 class CardsView extends Component {
+  addToFavorites = (eventId) => {
+    const { mutate, user } = this.props;
+    mutate({ variables: { userId: user._id, eventId, type: AGREE } });
+  }
+
+  addToMaybe = (eventId) => {
+    const { mutate, user } = this.props;
+    mutate({ variables: { userId: user._id, eventId, type: MAYBE } });
+  }
+
+  addToRejected = (eventId) => {
+    const { mutate, user } = this.props;
+    mutate({ variables: { userId: user._id, eventId, type: CANCEL } });
+  }
+
   render() {
     const {
-      events, classes, history, userName,
+      events, classes, history, authorName, user,
     } = this.props;
 
     return (
@@ -29,7 +51,7 @@ class CardsView extends Component {
         {events.map(event => (
           <Card className={classes.card} key={event._id}>
             <CardHeader
-              avatar={(<Avatar aria-label="recipe" className={classes.avatar}>{userName.charAt(0).toUpperCase()}</Avatar>)}
+              avatar={(<Avatar aria-label="recipe" className={classes.avatar}>{authorName.charAt(0).toUpperCase()}</Avatar>)}
               title={event.name}
               subheader={moment(event.start).format(dateFormat)}
             />
@@ -44,13 +66,13 @@ class CardsView extends Component {
               </div>
             </CardContent>
             <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
+              <IconButton color={getColor(user._id, event.agreedUsers)} aria-label="add to favorites" onClick={() => this.addToFavorites(event._id)}>
                 <Icon>favorite</Icon>
               </IconButton>
-              <IconButton aria-label="maybe">
+              <IconButton color={getColor(user._id, event.maybeUsers)} aria-label="maybe" onClick={() => this.addToMaybe(event._id)}>
                 <Icon>thumbs_up_down</Icon>
               </IconButton>
-              <IconButton aria-label="cancel">
+              <IconButton aria-label="cancel" color={getColor(user._id, event.rejectedUsers)} onClick={() => this.addToRejected(event._id)}>
                 <Icon>cancel</Icon>
               </IconButton>
               <IconButton aria-label="info" className={classes.infoIcon} onClick={() => history.push(`/event_detail/${event._id}`)}>
@@ -65,63 +87,14 @@ class CardsView extends Component {
 }
 CardsView.propTypes = {
   history: shape({}).isRequired,
-  userName: string,
+  authorName: string,
   events: arrayOf(shape({})).isRequired,
   classes: shape({}).isRequired,
+  user: shape({}).isRequired,
+  mutate: func.isRequired,
 };
 CardsView.defaultProps = {
-  userName: 'Test',
+  authorName: 'Test',
 };
 
-const styles = {
-  root: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'start',
-    flexFlow: 'row wrap',
-    flexWrap: 'wrap',
-    alignContent: 'flex-end',
-    padding: 5,
-  },
-  gridList: {
-    width: '90%',
-    textAlign: 'left',
-  },
-  icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
-  },
-  description: {
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-  },
-  content: {
-    height: 60,
-    whiteSpace: 'nowrap',
-  },
-  eventCard: {
-    opacity: 0.85,
-    border: '2px solid transparent',
-  },
-  hoveredEvent: {
-    cursor: 'pointer',
-    opacity: 1,
-  },
-
-  card: {
-    width: 345,
-    margin: 5,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%',
-  },
-  avatar: {
-    backgroundColor: 'red',
-  },
-  infoIcon: {
-    marginLeft: 'auto',
-  },
-};
-
-export default withStyles(styles)(CardsView);
+export default CardsView;
