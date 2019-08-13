@@ -32,7 +32,7 @@ const resolvers = {
   Query: {
     users: async () => getAllUsers(),
     allEvents: async () => getAllEvents(),
-    getUser: (root, {_id}) => getUser(_id),
+    getUser: (root, {userId}) => getUser(userId),
     loginUser: (root, params) => loginUser(params),
     verifyUser: (root, params) => verifyUser(params),
     getUserEvents: (root, {userId}) => getUserEvents(userId),

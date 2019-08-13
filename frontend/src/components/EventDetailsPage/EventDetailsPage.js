@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
+import { func, shape, bool } from 'prop-types';
 import { createPath, isUserInArray } from '../../helpers';
+import { onGetEvent } from '../../APIUtilites/apiQuery';
+import { eventUserActions } from '../../constants/enums';
+
+const { AGREE, CANCEL, MAYBE } = eventUserActions;
 
 const statuses = {
-  AGREE: 'I will go',
-  MAYBE: 'I maybe go',
-  REJECTED: 'Not interesting',
+  AGREE_TEXT: 'I will go',
+  MAYBE_TEX: 'I maybe go',
+  REJECTED_TEX: 'Not interesting',
 };
 const dateFormat = 'dddd, MMMM Do YYYY, h:mm';
 class EventDetailsPage extends Component {
+  onAddUserToEvent = (type) => {
+    const { addUserToEvent, user, event } = this.props;
+    addUserToEvent({
+      variables: { userId: user._id, eventId: event._id, type },
+      refetchQueries: [{ query: onGetEvent, variables: { eventId: event._id } }],
+    });
+  };
+
   render() {
     const {
       error, event, loading, classes, user,
@@ -28,6 +41,9 @@ class EventDetailsPage extends Component {
     const isUserAgreed = isUserInArray(user._id, event.agreedUsers);
     const isUserMaybe = isUserInArray(user._id, event.maybeUsers);
     const isUserRejected = isUserInArray(user._id, event.rejectedUsers);
+    const statusText = (isUserAgreed && statuses.AGREE_TEXT)
+      || (isUserMaybe && statuses.MAYBE_TEX)
+      || (isUserRejected && statuses.REJECTED_TEX);
 
     return (
       <div className={classes.root}>
@@ -56,11 +72,11 @@ class EventDetailsPage extends Component {
         </div>
         {isShowButtons && (
         <div className={classes.statusSection}>
-          <div className={classes.status}>Status: I will go</div>
+          <div className={classes.status}>Status: {statusText}</div>
           <div className={classes.buttonSection}>
-            <Button color="secondary" variant="contained">{statuses.AGREE}</Button>
-            <Button color="primary" variant="contained">{statuses.MAYBE}</Button>
-            <Button variant="contained">{statuses.REJECTED}</Button>
+            <Button color="secondary" variant="contained" onClick={() => this.onAddUserToEvent(AGREE)}>{statuses.AGREE_TEXT}</Button>
+            <Button color="primary" variant="contained" onClick={() => this.onAddUserToEvent(MAYBE)}>{statuses.MAYBE_TEX}</Button>
+            <Button variant="contained" onClick={() => this.onAddUserToEvent(CANCEL)}>{statuses.REJECTED_TEX}</Button>
           </div>
         </div>
         )}
@@ -68,5 +84,16 @@ class EventDetailsPage extends Component {
     );
   }
 }
-
+EventDetailsPage.propTypes = {
+  event: shape({}).isRequired,
+  classes: shape({}).isRequired,
+  user: shape({}).isRequired,
+  addUserToEvent: func.isRequired,
+  loading: bool,
+  error: shape({}),
+};
+EventDetailsPage.defaultProps = {
+  loading: false,
+  error: null,
+};
 export default EventDetailsPage;

@@ -27,6 +27,13 @@ export const onGetEvent = gql`
     }
 `;
 
+export const onGetAuthorName = gql`
+    query getUser($userId:  ID!) {
+        getUser(userId: $userId) {
+            name
+        }
+    }
+`;
 export const onAddUserToEvent = gql`
     mutation addUserToEvent($userId:  ID!, $eventId: ID!, $type: String!) {
         addUserToEvent(userId: $userId, eventId: $eventId, type: $type) {
