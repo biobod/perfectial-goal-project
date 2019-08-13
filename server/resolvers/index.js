@@ -6,6 +6,7 @@ const {
   getEvent,
   getUserEventsByType,
   addUserToEvent,
+  removeUserFromEvent,
 } = require('../controllers/eventController');
 
 var fs = require('fs');
@@ -48,6 +49,7 @@ const resolvers = {
       return eventCreate({...params, image: validImage})
     },
     addUserToEvent: (root, params) => addUserToEvent(params),
+    removeUserFromEvent: (root, params) => removeUserFromEvent(params),
   }
 };
 

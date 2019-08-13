@@ -1,12 +1,7 @@
-import React, { Component } from 'react';
-import { Icon } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
+import React, { Fragment } from 'react';
+import {
+  Card, CardHeader, CardMedia, Icon, CardContent, CardActions, Avatar, IconButton,
+} from '@material-ui/core';
 import moment from 'moment';
 import {
   shape, string, arrayOf, func,
@@ -23,25 +18,27 @@ const createPath = (path) => {
 
 const dateFormat = 'dddd, MMMM Do YYYY, h:mm';
 
-const getColor = (userId, usersArray) => (usersArray.includes(userId) ? 'secondary' : '');
+const getColor = active => (active ? 'secondary' : '');
+const isUserInArray = (userId, usersArray) => usersArray.includes(userId);
 
-class CardsView extends Component {
-  addUserToEvent = (eventId, type) => {
-    const { mutate, user } = this.props;
+const CardsView = ({
+  events, classes, history, authorName, user, addUserToEvent, removeUserFromEvent,
+}) => {
+  const modifyEvent = (eventId, type, isRemoveAction) => {
+    const mutate = isRemoveAction ? removeUserFromEvent : addUserToEvent;
     mutate({
       variables: { userId: user._id, eventId, type },
       refetchQueries: [{ query: onGetEvent, variables: { eventId } }],
     });
-  }
+  };
+  return (
+    <div className={classes.root}>
+      {events.map((event) => {
+        const isUserAgreed = isUserInArray(user._id, event.agreedUsers);
+        const isUserMaybe = isUserInArray(user._id, event.maybeUsers);
+        const isUserRejected = isUserInArray(user._id, event.rejectedUsers);
 
-  render() {
-    const {
-      events, classes, history, authorName, user,
-    } = this.props;
-
-    return (
-      <div className={classes.root}>
-        {events.map(event => (
+        return (
           <Card className={classes.card} key={event._id}>
             <CardHeader
               avatar={(<Avatar aria-label="recipe" className={classes.avatar}>{authorName.charAt(0).toUpperCase()}</Avatar>)}
@@ -59,32 +56,52 @@ class CardsView extends Component {
               </div>
             </CardContent>
             <CardActions disableSpacing>
-              <IconButton color={getColor(user._id, event.agreedUsers)} aria-label="add to favorites" onClick={() => this.addUserToEvent(event._id, AGREE)}>
+              <IconButton
+                color={getColor(isUserAgreed)}
+                disabled={user._id === event.creatorId}
+                aria-label="add to favorites"
+                onClick={() => modifyEvent(event._id, AGREE, isUserAgreed)}
+              >
                 <Icon>favorite</Icon>
               </IconButton>
-              <IconButton color={getColor(user._id, event.maybeUsers)} aria-label="maybe" onClick={() => this.addUserToEvent(event._id, MAYBE)}>
+              <IconButton
+                color={getColor(isUserMaybe)}
+                disabled={user._id === event.creatorId}
+                aria-label="maybe"
+                onClick={() => modifyEvent(event._id, MAYBE, isUserMaybe)}
+              >
                 <Icon>thumbs_up_down</Icon>
               </IconButton>
-              <IconButton aria-label="cancel" color={getColor(user._id, event.rejectedUsers)} onClick={() => this.addUserToEvent(event._id, CANCEL)}>
+              <IconButton
+                aria-label="cancel"
+                disabled={user._id === event.creatorId}
+                color={getColor(isUserRejected)}
+                onClick={() => modifyEvent(event._id, CANCEL, isUserRejected)}
+              >
                 <Icon>cancel</Icon>
               </IconButton>
-              <IconButton aria-label="info" className={classes.infoIcon} onClick={() => history.push(`/event_detail/${event._id}`)}>
+              <IconButton
+                aria-label="info"
+                className={classes.infoIcon}
+                onClick={() => history.push(`/event_detail/${event._id}`)}
+              >
                 <Icon>info</Icon>
               </IconButton>
             </CardActions>
           </Card>
-        ))}
-      </div>
-    );
-  }
-}
+        );
+      })}
+    </div>
+  );
+};
 CardsView.propTypes = {
   history: shape({}).isRequired,
   authorName: string,
   events: arrayOf(shape({})).isRequired,
   classes: shape({}).isRequired,
   user: shape({}).isRequired,
-  mutate: func.isRequired,
+  addUserToEvent: func.isRequired,
+  removeUserFromEvent: func.isRequired,
 };
 CardsView.defaultProps = {
   authorName: 'Test',

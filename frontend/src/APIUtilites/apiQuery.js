@@ -30,15 +30,30 @@ export const onGetEvent = gql`
 export const onAddUserToEvent = gql`
     mutation addUserToEvent($userId:  ID!, $eventId: ID!, $type: String!) {
         addUserToEvent(userId: $userId, eventId: $eventId, type: $type) {
+            _id
+        }
+    }
+`;
+export const onRemoveUserFromEvent = gql`
+    mutation removeUserFromEvent($userId:  ID!, $eventId: ID!, $type: String!) {
+        removeUserFromEvent(userId: $userId, eventId: $eventId, type: $type) {
+            _id
+        }
+    }
+`;
+
+export const onGeFavoriteEvents = gql`
+    query getUserEventsByType($userId: String!, $type: String! ) {
+        getUserEventsByType(userId: $userId, type: $type) {
             name
             description
             start
             end
             contribution
+            creatorId
             _id
             agreedUsers
             rejectedUsers
-            creatorId
             maybeUsers
             image {
                 path

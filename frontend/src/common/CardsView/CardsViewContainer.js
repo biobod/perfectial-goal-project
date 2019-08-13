@@ -1,7 +1,7 @@
 import { graphql, compose } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
 import CardsView from './CardsView';
-import { onAddUserToEvent } from '../../APIUtilites/apiQuery';
+import { onAddUserToEvent, onRemoveUserFromEvent } from '../../APIUtilites/apiQuery';
 
 const styles = {
   root: {
@@ -54,6 +54,9 @@ const styles = {
   },
 };
 
-const CardsViewContainer = compose(graphql(onAddUserToEvent))(CardsView);
+const CardsViewContainer = compose(
+  graphql(onAddUserToEvent, { name: 'addUserToEvent' }),
+  graphql(onRemoveUserFromEvent, { name: 'removeUserFromEvent' }),
+)(CardsView);
 
 export default withStyles(styles)(CardsViewContainer);
