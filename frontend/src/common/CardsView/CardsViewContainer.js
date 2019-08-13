@@ -8,7 +8,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'start',
+    justifyContent: 'center',
     flexFlow: 'row wrap',
     flexWrap: 'wrap',
     alignContent: 'flex-end',

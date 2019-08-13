@@ -9,18 +9,14 @@ import {
 import { eventUserActions } from '../../constants/enums';
 import { onGetEvent } from '../../APIUtilites/apiQuery';
 import routes from '../../constants/routes';
+import { isUserInArray, createPath } from '../../helpers';
 
 const { AGREE, CANCEL, MAYBE } = eventUserActions;
 
-const createPath = (path) => {
-  const name = path.split('./')[1];
-  return `http://localhost:3000/${name}`;
-};
 
 const dateFormat = 'dddd, MMMM Do YYYY, h:mm';
 
 const getColor = active => (active ? 'secondary' : '');
-const isUserInArray = (userId, usersArray) => usersArray.includes(userId);
 
 const CardsView = ({
   events, classes, history, authorName, user, addUserToEvent, removeUserFromEvent,

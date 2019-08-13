@@ -18,7 +18,6 @@ import RejectEventsPage from './components/RejectEventsPage/RejectEventsPageCont
 import MaybeEventsPage from './components/MaybeEventsPage/MaybeEventsPageContainer';
 import routes from './constants/routes';
 
-
 import './index.css';
 
 
@@ -38,7 +37,6 @@ class App extends Component {
       <ApolloProvider client={client}>
         <BrowserRouter>
           <div className={classes.app}>
-
             <Switch>
               <Route exact path={routes.LOGIN} component={LoginPage} />
               <Route exact path={routes.SIGNUP} component={SignUpPage} />
@@ -57,13 +55,14 @@ class App extends Component {
               </NavBarWrapper>
             </Switch>
           </div>
-
         </BrowserRouter>
       </ApolloProvider>
     );
   }
 }
+
 App.propTypes = {
   classes: shape({}).isRequired,
 };
+
 export default withStyles(styles)(App);

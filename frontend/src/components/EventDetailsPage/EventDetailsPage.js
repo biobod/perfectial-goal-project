@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
-import { createPath } from '../helpers';
+import { createPath, isUserInArray } from '../../helpers';
 
+const statuses = {
+  AGREE: 'I will go',
+  MAYBE: 'I maybe go',
+  REJECTED: 'Not interesting',
+};
 const dateFormat = 'dddd, MMMM Do YYYY, h:mm';
 class EventDetailsPage extends Component {
   render() {
@@ -19,6 +24,10 @@ class EventDetailsPage extends Component {
     const duration = moment
       .duration(moment(event.end, 'YYYY/MM/DD HH:mm')
         .diff(moment(event.start, 'YYYY/MM/DD HH:mm'))).asHours();
+
+    const isUserAgreed = isUserInArray(user._id, event.agreedUsers);
+    const isUserMaybe = isUserInArray(user._id, event.maybeUsers);
+    const isUserRejected = isUserInArray(user._id, event.rejectedUsers);
 
     return (
       <div className={classes.root}>
@@ -46,10 +55,13 @@ class EventDetailsPage extends Component {
           <div>{event.description}</div>
         </div>
         {isShowButtons && (
-        <div className={classes.buttonSection}>
-          <Button color="secondary" variant="contained">I will go</Button>
-          <Button color="primary" variant="contained">I maybe go</Button>
-          <Button variant="contained"> Not interesting</Button>
+        <div className={classes.statusSection}>
+          <div className={classes.status}>Status: I will go</div>
+          <div className={classes.buttonSection}>
+            <Button color="secondary" variant="contained">{statuses.AGREE}</Button>
+            <Button color="primary" variant="contained">{statuses.MAYBE}</Button>
+            <Button variant="contained">{statuses.REJECTED}</Button>
+          </div>
         </div>
         )}
       </div>

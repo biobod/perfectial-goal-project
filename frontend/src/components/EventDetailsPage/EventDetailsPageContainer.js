@@ -1,7 +1,7 @@
 import { graphql, compose } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
 import EventDetailsPage from './EventDetailsPage';
-import { onGetEvent } from '../../APIUtilites/apiQuery';
+import { onAddUserToEvent, onGetEvent } from '../../APIUtilites/apiQuery';
 
 const styles = {
   root: {
@@ -21,14 +21,23 @@ const styles = {
     height: 300,
   },
   buttonSection: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  statusSection: {
     marginTop: 20,
     display: 'flex',
-    justifyContent: 'space-around',
+    flexDirection: 'column',
+  },
+  status: {
+    textAlign: 'left',
+    fontSize: 20,
   },
 };
 
 
 const EventDetailsPageContainer = compose(
+  graphql(onAddUserToEvent, { name: 'addUserToEvent' }),
   graphql(onGetEvent, {
     options: props => ({
       variables: { eventId: props.match.params.eventId },
