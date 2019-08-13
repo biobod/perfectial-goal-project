@@ -14,6 +14,11 @@ import CreateEventPage from './components/CreateEventPage/CreateEventPageContain
 import MyEventsPage from './components/MyEventsPage/MyEventsPageContainer';
 import EventDetailsPage from './components/EventDetailsPage/EventDetailsPageContainer';
 import FavoriteEventsPage from './components/FavoriteEventsPage/FavoriteEventsPageContainer';
+import RejectEventsPage from './components/RejectEventsPage/RejectEventsPageContainer';
+import MaybeEventsPage from './components/MaybeEventsPage/MaybeEventsPageContainer';
+import routes from './constants/routes';
+
+
 import './index.css';
 
 
@@ -35,16 +40,18 @@ class App extends Component {
           <div className={classes.app}>
 
             <Switch>
-              <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/signup" component={SignUpPage} />
+              <Route exact path={routes.LOGIN} component={LoginPage} />
+              <Route exact path={routes.SIGNUP} component={SignUpPage} />
               <NavBarWrapper>
                 <Switch>
-                  <PrivateRoute path="/create_event" component={CreateEventPage} />
-                  <PrivateRoute path="/my_events" component={MyEventsPage} />
-                  <PrivateRoute path="/favorite_events" component={FavoriteEventsPage} />
-                  <PrivateRoute path="/account_profile" component={AccountProfile} />
-                  <PrivateRoute path="/all_users" component={AllUsers} />
-                  <PrivateRoute path="/event_detail/:eventId" component={EventDetailsPage} />
+                  <PrivateRoute path={routes.CREATE} component={CreateEventPage} />
+                  <PrivateRoute path={routes.MY} component={MyEventsPage} />
+                  <PrivateRoute path={routes.FAVORITE} component={FavoriteEventsPage} />
+                  <PrivateRoute path={routes.REJECTED} component={RejectEventsPage} />
+                  <PrivateRoute path={routes.MAYBE} component={MaybeEventsPage} />
+                  <PrivateRoute path={routes.ACCOUNT_PROFILE} component={AccountProfile} />
+                  <PrivateRoute path={routes.USERS} component={AllUsers} />
+                  <PrivateRoute path={`${routes.EVENT_DETAIL}/:eventId`} component={EventDetailsPage} />
                   <PrivateRoute exact path="/" component={HomePage} />
                 </Switch>
               </NavBarWrapper>

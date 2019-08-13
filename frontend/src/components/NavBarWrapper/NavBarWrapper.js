@@ -10,7 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
+import routes from '../../constants/routes';
 
 import useStyles from './styles';
 
@@ -30,14 +30,14 @@ const NavBarWrapper = ({ history, user, children }) => {
   const handleProfileMenuOpen = event => setAnchorEl(event.currentTarget);
   const closeAndRedirectToProfile = () => {
     handleMenuClose();
-    history.push('/account_profile');
+    history.push(routes.ACCOUNT_PROFILE);
   };
 
   const goToHome = () => history.push('/');
   const logOut = () => {
     localStorage.removeItem('user');
     handleMenuClose();
-    history.push('/login');
+    history.push(routes.LOGIN);
   };
   const renderMenu = (
     <Menu
@@ -113,30 +113,30 @@ const NavBarWrapper = ({ history, user, children }) => {
         </div>
         <Divider />
         <List>
-          <ListItem button key="create_event" onClick={() => history.push('/create_event')}>
+          <ListItem button key="create_event" onClick={() => history.push(routes.CREATE)}>
             <ListItemIcon><Icon color="secondary">add_circle</Icon></ListItemIcon>
             <ListItemText primary="Create event" />
           </ListItem>
-          <ListItem button key="my_events" onClick={() => history.push('/my_events')}>
+          <ListItem button key="my_events" onClick={() => history.push(routes.MY)}>
             <ListItemIcon><Icon color="secondary">star_alt</Icon></ListItemIcon>
             <ListItemText primary="My events" />
           </ListItem>
-          <ListItem button key="favorite" onClick={() => history.push('/favorite_events')}>
+          <ListItem button key="favorite" onClick={() => history.push(routes.FAVORITE)}>
             <ListItemIcon><Icon color="secondary">favorite</Icon></ListItemIcon>
             <ListItemText primary="Favorite events" />
           </ListItem>
-          <ListItem button key="maybe_events">
+          <ListItem button key="maybe_events" onClick={() => history.push(routes.MAYBE)}>
             <ListItemIcon><Icon>thumbs_up_down</Icon></ListItemIcon>
             <ListItemText primary="May be events" />
           </ListItem>
-          <ListItem button key="rejected_events">
+          <ListItem button key="rejected_events" onClick={() => history.push(routes.REJECTED)}>
             <ListItemIcon><Icon>cancel</Icon></ListItemIcon>
             <ListItemText primary="Rejected events" />
           </ListItem>
         </List>
         <Divider />
         <List>
-          <ListItem button key="Account" onClick={() => history.push('/account_profile')}>
+          <ListItem button key="Account" onClick={() => history.push(routes.ACCOUNT_PROFILE)}>
             <ListItemIcon><Icon>account_circle</Icon></ListItemIcon>
             <ListItemText primary="My account" />
           </ListItem>

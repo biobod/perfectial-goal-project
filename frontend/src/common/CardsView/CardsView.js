@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   Card, CardHeader, CardMedia, Icon, CardContent, CardActions, Avatar, IconButton,
 } from '@material-ui/core';
@@ -8,6 +8,7 @@ import {
 } from 'prop-types';
 import { eventUserActions } from '../../constants/enums';
 import { onGetEvent } from '../../APIUtilites/apiQuery';
+import routes from '../../constants/routes';
 
 const { AGREE, CANCEL, MAYBE } = eventUserActions;
 
@@ -83,7 +84,7 @@ const CardsView = ({
               <IconButton
                 aria-label="info"
                 className={classes.infoIcon}
-                onClick={() => history.push(`/event_detail/${event._id}`)}
+                onClick={() => history.push(`${routes.EVENT_DETAIL}/${event._id}`)}
               >
                 <Icon>info</Icon>
               </IconButton>
