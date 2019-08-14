@@ -1,10 +1,7 @@
-import ApolloClient, {
-  gql, InMemoryCache, ApolloLink,
-} from 'apollo-boost';
+import ApolloClient, { gql, InMemoryCache } from 'apollo-boost';
 import { createUploadLink } from 'apollo-upload-client';
-
-import { onError } from 'apollo-link-error';
 import { uri } from '../../../config/config';
+import Notification from '../common/Notification/Notification';
 
 export const cache = new InMemoryCache();
 
@@ -23,18 +20,28 @@ cache.writeData({
     localStorageUser: { ...getUserFromStorage(), __typename: 'localStorageUser' },
   },
 });
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = ({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
-    console.log('graphQLErrors -2ewd', graphQLErrors);
+    const { message } = graphQLErrors[0];
+    console.log(message);
+    Notification.show({ message });
   }
   if (networkError) {
-    console.log('networkError-342342323', networkError);
+    console.log(networkError.message);
   }
-});
-const link = ApolloLink.from([errorLink, createUploadLink()]);
+};
 
 export const client = new ApolloClient({
-  cache, uri, link, resolvers: {},
+  cache,
+  uri,
+  link: createUploadLink(),
+  onError: errorLink,
+  resolvers: {},
+  defaultOptions: {
+    watchQuery: {
+      errorPolicy: 'all',
+    },
+  },
 });
 
 

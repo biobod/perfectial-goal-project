@@ -17,7 +17,7 @@ import FavoriteEventsPage from './components/FavoriteEventsPage/FavoriteEventsPa
 import RejectEventsPage from './components/RejectEventsPage/RejectEventsPageContainer';
 import MaybeEventsPage from './components/MaybeEventsPage/MaybeEventsPageContainer';
 import routes from './constants/routes';
-
+import AppNotifications from './common/Notification/AppNotifications';
 import './index.css';
 
 
@@ -29,10 +29,12 @@ const styles = {
     textAlign: 'center',
   },
 };
-
 class App extends Component {
   render() {
     const { classes } = this.props;
+    const AppNotificationsComponent = () => AppNotifications;
+
+    console.log(client);
     return (
       <ApolloProvider client={client}>
         <BrowserRouter>
@@ -52,6 +54,8 @@ class App extends Component {
                   <PrivateRoute path={`${routes.EVENT_DETAIL}/:eventId`} component={EventDetailsPage} />
                   <PrivateRoute exact path="/" component={HomePage} />
                 </Switch>
+                <AppNotificationsComponent />
+
               </NavBarWrapper>
             </Switch>
           </div>
