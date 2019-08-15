@@ -9,6 +9,7 @@ import { DropzoneArea } from 'material-ui-dropzone';
 import axios from 'axios';
 import { uri } from '../../../../config/config';
 import Notification from '../../common/Notification/Notification';
+import routes from '../../constants/routes';
 
 const createEventQuery = `
   mutation createEvent(
@@ -30,7 +31,7 @@ const createEventQuery = `
           image: $image
       )
       {
-      name
+        _id
       }
   }`;
 
@@ -57,7 +58,7 @@ class CreateEventPage extends Component {
   uploadFile = files => this.setState({ files })
 
   onSubmit = () => {
-    const { user } = this.props;
+    const { user, history } = this.props;
     const {
       startDate, endDate, startTime, endTime, name, description, contribution, files,
     } = this.state;
@@ -83,15 +84,17 @@ class CreateEventPage extends Component {
     fd.append('map', JSON.stringify(map));
     fd.append('6', files[0]);
 
-
     axios.post(uri, fd).then((res) => {
       const { data } = res;
       if (data.errors) {
         data.errors.map(({ message }) => Notification.show({ message }));
-      } else {
-        Notification.show({ message: 'Event was successfully created!', type: 'success' });
+      } else if (data.data) {
+        const eventId = data.data.createEvent._id;
+        Notification.show({ message: 'Event was successfully created! You will be redirected to detail page', type: 'success' });
+        setTimeout(() => {
+          history.push(`${routes.EVENT_DETAIL}/${eventId}`);
+        }, 1500);
       }
-      return res.data;
     });
   }
 
@@ -235,6 +238,7 @@ class CreateEventPage extends Component {
 
 CreateEventPage.propTypes = {
   classes: shape({}).isRequired,
+  history: shape({}).isRequired,
   user: shape({
     id: string,
   }),

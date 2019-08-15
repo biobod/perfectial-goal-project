@@ -63,12 +63,6 @@ class Api {
     });
     return data;
   }
-
-  getAllEvents = () => {
-    client
-      .query({ query: gql`{allEvents { name _id description, image { path } }}` })
-      .then(console.log);
-  }
 }
 
 const api = new Api();
