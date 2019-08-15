@@ -87,10 +87,7 @@ class Notification extends Component {
 
     return (
       <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         open={isOpen}
       >
         <div>

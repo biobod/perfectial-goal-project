@@ -8,6 +8,7 @@ import moment from 'moment';
 import { DropzoneArea } from 'material-ui-dropzone';
 import axios from 'axios';
 import { uri } from '../../../../config/config';
+import Notification from '../../common/Notification/Notification';
 
 const createEventQuery = `
   mutation createEvent(
@@ -83,7 +84,13 @@ class CreateEventPage extends Component {
     fd.append('6', files[0]);
 
 
-    axios.post(uri, fd).then(console.log);
+    axios.post(uri, fd).then((res) => {
+      const { data } = res;
+      if (data.errors) {
+        data.errors.map(({ message }) => Notification.show({ message }));
+      }
+      return res.data;
+    });
   }
 
   render() {
