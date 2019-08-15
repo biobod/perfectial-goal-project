@@ -23,11 +23,10 @@ cache.writeData({
 const errorLink = ({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     const { message } = graphQLErrors[0];
-    console.log(message);
     Notification.show({ message });
   }
   if (networkError) {
-    console.log(networkError.message);
+    Notification.show({ message: networkError.message });
   }
 };
 

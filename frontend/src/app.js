@@ -34,7 +34,6 @@ class App extends Component {
     const { classes } = this.props;
     const AppNotificationsComponent = () => AppNotifications;
 
-    console.log(client);
     return (
       <ApolloProvider client={client}>
         <BrowserRouter>
