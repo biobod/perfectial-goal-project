@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import ErrorIcon from '@material-ui/icons/Error';
-import CloseIcon from '@material-ui/icons/Close';
+import { Icon } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import Snackbar from '@material-ui/core/Snackbar';
+
+const errorColor = '#d32f2f';
+const successColor = '#43a047';
 
 const classes = {
   content: {
@@ -59,10 +61,10 @@ class Notification extends Component {
     return { ...props, key };
   }
 
-  show({ message }) {
+  show({ message, type = 'error' }) {
     const { notification } = this;
     const { messages } = notification.state;
-    const newMessage = notification.createMessageKey({ message });
+    const newMessage = notification.createMessageKey({ message, type });
     notification.setState({ message, open: true, messages: [...messages, newMessage] });
   }
 
@@ -91,23 +93,28 @@ class Notification extends Component {
         open={isOpen}
       >
         <div>
-          {messages.map(({ message, key }) => (
-            <SnackbarContent
-              aria-describedby="client-snackbar"
-              style={classes.content}
-              message={(
-                <span id="client-snackbar" style={classes.message}>
-                  <ErrorIcon style={classes.icon} />
-                  <div style={classes.text}>{message}</div>
-                </span>
-            )}
-              action={[
-                <IconButton key="close" aria-label="close" color="inherit" onClick={() => this.onClose(key)}>
-                  <CloseIcon style={classes.icon} />
-                </IconButton>,
-              ]}
-            />
-          ))}
+          {messages.map(({ message, key, type }) => {
+            const isError = type === 'error';
+            const contentStyle = { backgroundColor: isError ? errorColor : successColor };
+            const icon = isError ? 'error' : 'check_circle';
+            return (
+              <SnackbarContent
+                aria-describedby="client-snackbar"
+                style={{ ...classes.content, ...contentStyle }}
+                message={(
+                  <span id="client-snackbar" style={classes.message}>
+                    <Icon style={classes.icon}>{icon}</Icon>
+                    <div style={classes.text}>{message}</div>
+                  </span>
+                )}
+                action={[
+                  <IconButton key="close" aria-label="close" color="inherit" onClick={() => this.onClose(key)}>
+                    <Icon style={classes.icon}>close_circle</Icon>
+                  </IconButton>,
+                ]}
+              />
+            );
+          })}
         </div>
       </Snackbar>
     );

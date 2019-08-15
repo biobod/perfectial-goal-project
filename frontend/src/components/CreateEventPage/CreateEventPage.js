@@ -88,6 +88,8 @@ class CreateEventPage extends Component {
       const { data } = res;
       if (data.errors) {
         data.errors.map(({ message }) => Notification.show({ message }));
+      } else {
+        Notification.show({ message: 'Event was successfully created!', type: 'success' });
       }
       return res.data;
     });
