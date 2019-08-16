@@ -3,12 +3,22 @@ export default {
     display: 'flex',
     justifyContent: 'center',
   },
-  dateSection: {
+  fieldWrapper: {
     width: '100%',
     display: 'flex',
   },
   buttonCls: {
     marginTop: '20px',
     justifySelf: 'start',
+  },
+  dateSection: {
+    marginRight: 20,
+    textAlign: 'start',
+  },
+  time: {
+    marginLeft: 2,
+  },
+  dropZone: {
+    maxWidth: 700,
   },
 };

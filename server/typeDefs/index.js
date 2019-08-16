@@ -35,7 +35,7 @@ const query = `{
 
 const mutation = `{
     saveUser(email: String!, password: String!, name: String!): User
-    createEvent(name: String!, description: String!, start: String!, end: String!, creatorId: ID!, contribution: Int!, image: Upload!): Event
+    createEvent(name: String!, description: String!, start: String!, end: String!, creatorId: ID!, contribution: Int, image: Upload!): Event
     addUserToEvent(userId:  ID!, eventId: ID!, type: String!): Event
     removeUserFromEvent(userId:  ID!, eventId: ID!, type: String!): Event
   }`;

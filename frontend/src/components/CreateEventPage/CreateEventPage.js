@@ -35,6 +35,7 @@ const createEventQuery = `
       }
   }`;
 
+const requiredFields = ['startDate', 'endDate', 'startTime', 'endTime', 'name', 'description'];
 class CreateEventPage extends Component {
   constructor(props) {
     super(props);
@@ -47,21 +48,41 @@ class CreateEventPage extends Component {
       contribution: 0,
       endTime: '',
       files: [],
+      emptyErrors: [],
     };
   }
 
   onChangeField = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState(state => ({ [name]: value, emptyErrors: state.emptyErrors.filter(v => v !== name) }));
   }
 
   uploadFile = files => this.setState({ files })
+
+  checkRequiredFields = () => {
+    const { state } = this;
+    const emptyErrors = requiredFields.map((key) => {
+      if (!state[key].trim().length) {
+        return key;
+      }
+      return null;
+    }).filter(v => v);
+    this.setState({ emptyErrors });
+    return emptyErrors;
+  }
 
   onSubmit = () => {
     const { user, history } = this.props;
     const {
       startDate, endDate, startTime, endTime, name, description, contribution, files,
     } = this.state;
+
+    const emptyRequiredFields = this.checkRequiredFields();
+    if (emptyRequiredFields.length) {
+      const manyFields = emptyRequiredFields.length > 1;
+      Notification.show({ message: `Required field${manyFields ? 's' : ''} ${emptyRequiredFields} ${manyFields ? 'are' : 'is'} empty` });
+      return;
+    }
     const validStartDate = `${startDate}T${startTime}`;
     const validEndDate = `${endDate}T${endTime}`;
     const createEvent = {
@@ -101,23 +122,25 @@ class CreateEventPage extends Component {
   render() {
     const { classes } = this.props;
     const {
-      startDate, endDate, startTime, endTime, contribution, name, description,
+      startDate, endDate, startTime, endTime, contribution, name, description, emptyErrors,
     } = this.state;
 
     return (
       <div className={classes.root}>
         <Grid
           item
-          sm={9}
+          sm={8}
           direction="column"
           justify="center"
           alignItems="center"
         >
+          <h2>Create event</h2>
           <TextField
             label="Title"
             fullWidth
             name="name"
             required
+            error={emptyErrors.includes('name')}
             value={name}
             onChange={this.onChangeField}
             margin="normal"
@@ -130,75 +153,84 @@ class CreateEventPage extends Component {
             value={description}
             onChange={this.onChangeField}
             multiline
+            error={emptyErrors.includes('description')}
             required
             rowsMax="4"
             fullWidth
             margin="normal"
             variant="outlined"
           />
-          <div className={classes.dateSection}>
-            <TextField
-              label="Start date"
-              type="date"
-              name="startDate"
-              required
-              value={startDate}
-              onChange={this.onChangeField}
-              margin="normal"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              label="Start time"
-              required
-              type="time"
-              name="startTime"
-              onChange={this.onChangeField}
-              value={startTime}
-              margin="normal"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                step: 300, // 5 min
-              }}
-            />
+          <div className={classes.fieldWrapper}>
+            <div className={classes.dateSection}>
+              <TextField
+                label="Start date"
+                type="date"
+                name="startDate"
+                required
+                error={emptyErrors.includes('startDate')}
+                value={startDate}
+                onChange={this.onChangeField}
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <TextField
+                label="Start time"
+                required
+                type="time"
+                name="startTime"
+                error={emptyErrors.includes('startTime')}
+                onChange={this.onChangeField}
+                className={classes.time}
+                value={startTime}
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  step: 300, // 5 min
+                }}
+              />
+            </div>
+            <div className={classes.dateSection}>
+              <TextField
+                label="End date"
+                type="date"
+                name="endDate"
+                value={endDate}
+                error={emptyErrors.includes('endDate')}
+                required
+                onChange={this.onChangeField}
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <TextField
+                label="End time"
+                type="time"
+                margin="normal"
+                variant="outlined"
+                required
+                name="endTime"
+                error={emptyErrors.includes('endTime')}
+                className={classes.time}
+                value={endTime}
+                onChange={this.onChangeField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  step: 300, // 5 min
+                }}
+              />
+            </div>
           </div>
-          <div className={classes.dateSection}>
-            <TextField
-              label="End date"
-              type="date"
-              name="endDate"
-              value={endDate}
-              required
-              onChange={this.onChangeField}
-              margin="normal"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              label="End time"
-              type="time"
-              margin="normal"
-              variant="outlined"
-              required
-              name="endTime"
-              value={endTime}
-              onChange={this.onChangeField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                step: 300, // 5 min
-              }}
-            />
-          </div>
-          <div className={classes.dateSection}>
+          <div className={classes.fieldWrapper}>
             <TextField
               label="contribution"
               type="number"
@@ -213,12 +245,12 @@ class CreateEventPage extends Component {
               }}
             />
           </div>
-          <div className={classes.dateSection}>
-            Upload file
+          <div className={classes.fieldWrapper}>
             <DropzoneArea
               acceptedFiles={['image/*']}
               onChange={this.uploadFile}
-              filesLimit={1}
+              showAlerts={false}
+              dropzoneClass={classes.dropZone}
             />
           </div>
           <Button
