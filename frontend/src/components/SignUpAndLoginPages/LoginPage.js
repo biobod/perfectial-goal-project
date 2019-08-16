@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { shape } from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   Container, Button, TextField,
 } from '@material-ui/core';
@@ -30,6 +31,12 @@ class LoginPage extends Component {
       .catch(error => console.log('Error', error));
   }
 
+  handleOnEnter = (e) => {
+    if (e.keyCode === 13) {
+      this.onLogin(e);
+    }
+  }
+
   render() {
     const { email, password } = this.state;
     const { classes } = this.props;
@@ -42,6 +49,7 @@ class LoginPage extends Component {
           margin="normal"
           variant="outlined"
           onChange={this.onChange}
+          onKeyDown={this.handleOnEnter}
           value={email}
           name="email"
         />
@@ -52,10 +60,13 @@ class LoginPage extends Component {
           margin="normal"
           variant="outlined"
           onChange={this.onChange}
+          onKeyDown={this.handleOnEnter}
           value={password}
+          type="password"
           name="password"
         />
-        <Button variant="contained" color="secondary" className={classes.buttonCls} onClick={this.onLogin}>Login</Button>
+        <Button type="submit" variant="contained" color="secondary" className={classes.buttonCls} onClick={this.onLogin}>Login</Button>
+        <div className={classes.message}>If you are not signed un, please go to <Link to="/signup">Sign Un page</Link></div>
       </Container>
     );
   }

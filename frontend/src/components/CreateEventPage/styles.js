@@ -19,6 +19,5 @@ export default {
     marginLeft: 2,
   },
   dropZone: {
-    maxWidth: 700,
   },
 };

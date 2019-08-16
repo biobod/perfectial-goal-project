@@ -17,4 +17,8 @@ export default {
   buttonCls: {
     marginTop: '20px',
   },
+  message: {
+    color: 'black',
+    marginTop: 20,
+  }
 };
