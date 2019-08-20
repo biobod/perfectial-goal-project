@@ -4,16 +4,17 @@ import moment from 'moment';
 import { func, shape, bool } from 'prop-types';
 import { createPath, isUserInArray } from '../../helpers';
 import { onGetEvent } from '../../APIUtilites/apiQuery';
-import { eventUserActions } from '../../constants/enums';
+import { eventUserActions, formats } from '../../constants/enums';
 
 const { AGREE, CANCEL, MAYBE } = eventUserActions;
+const { savedDateFormat, cardDateFormat } = formats;
 
 const statuses = {
   AGREE_TEXT: 'I will go',
   MAYBE_TEX: 'I maybe go',
   REJECTED_TEX: 'Not interesting',
 };
-const dateFormat = 'dddd, MMMM Do YYYY, h:mm';
+
 class EventDetailsPage extends Component {
   onAddUserToEvent = (type) => {
     const { addUserToEvent, user, event } = this.props;
@@ -35,8 +36,8 @@ class EventDetailsPage extends Component {
 
     const isShowButtons = user._id !== event.creatorId;
     const duration = moment
-      .duration(moment(event.end, 'YYYY/MM/DD HH:mm')
-        .diff(moment(event.start, 'YYYY/MM/DD HH:mm'))).asHours();
+      .duration(moment(event.end, savedDateFormat)
+        .diff(moment(event.start, savedDateFormat))).asHours();
 
     const isUserAgreed = isUserInArray(user._id, event.agreedUsers);
     const isUserMaybe = isUserInArray(user._id, event.maybeUsers);
@@ -51,15 +52,15 @@ class EventDetailsPage extends Component {
         <div className={classes.dateSection}>
           <div>
             <span>Start at: </span>
-            <span>{moment(event.start).format(dateFormat)}</span>
+            <span>{moment(event.start).format(cardDateFormat)}</span>
           </div>
           <div>
             <span>End at: </span>
-            <span>{moment(event.end).format(dateFormat)}</span>
+            <span>{moment(event.end).format(cardDateFormat)}</span>
           </div>
           <div>
             <span>Duration: </span>
-            <span>{duration} hours</span>
+            <span>{ Number.parseFloat(duration).toFixed(2)} hours</span>
           </div>
         </div>
         <div className={classes.description}>

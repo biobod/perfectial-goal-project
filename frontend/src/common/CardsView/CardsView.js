@@ -1,11 +1,13 @@
-import React, { Frangment } from 'react';
+import React from 'react';
 import moment from 'moment';
 import {
   shape, arrayOf, func,
 } from 'prop-types';
 import { onGetEvent } from '../../APIUtilites/apiQuery';
-
+import { formats } from '../../constants/enums';
 import Card from '../Card/CardContainer';
+
+const { savedDateFormat } = formats
 
 const CardsView = ({
   events, classes, history, user, addUserToEvent, removeUserFromEvent,
@@ -21,8 +23,10 @@ const CardsView = ({
     return null;
   }
   const passedEvents = [];
+  const currentDate = moment().format(savedDateFormat);
+
   const futureEvents = events.filter((event) => {
-    const isFutureEvent = event.start > moment().format('YYYY-MM-DDТhh:mm');
+    const isFutureEvent = moment(event.start, savedDateFormat).diff(moment(currentDate, savedDateFormat)) > 0;
     if (!isFutureEvent) {
       passedEvents.push(event);
     }
@@ -32,11 +36,11 @@ const CardsView = ({
     <div className={classes.root}>
       {futureEvents.length ? <h3 className={classes.subheader}>Future events</h3> : ''}
       <div className={classes.section}>
-        {futureEvents.map(event => <Card event={event} modifyEvent={modifyEvent} history={history} user={user} />)}
+        {futureEvents.map(event => <Card key={event._id} event={event} modifyEvent={modifyEvent} history={history} user={user} />)}
       </div>
       {passedEvents.length ? <h3 className={classes.subheader}>Passed events</h3> : ''}
       <div className={classes.section}>
-        {passedEvents.map(event => <Card event={event} modifyEvent={modifyEvent} history={history} user={user} disabled />)}
+        {passedEvents.map(event => <Card key={event._id} event={event} modifyEvent={modifyEvent} history={history} user={user} disabled />)}
       </div>
     </div>
   );

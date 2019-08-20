@@ -10,6 +10,9 @@ import axios from 'axios';
 import { uri } from '../../../../config/config';
 import Notification from '../../common/Notification/Notification';
 import routes from '../../constants/routes';
+import { formats } from '../../constants/enums';
+
+const { savedDateFormat } = formats;
 
 const createEventQuery = `
   mutation createEvent(
@@ -77,14 +80,21 @@ class CreateEventPage extends Component {
       startDate, endDate, startTime, endTime, name, description, contribution, files,
     } = this.state;
 
+    const validStartDate = `${startDate}T${startTime}`;
+    const validEndDate = `${endDate}T${endTime}`;
+
     const emptyRequiredFields = this.checkRequiredFields();
     if (emptyRequiredFields.length) {
       const manyFields = emptyRequiredFields.length > 1;
       Notification.show({ message: `Required field${manyFields ? 's' : ''} ${emptyRequiredFields} ${manyFields ? 'are' : 'is'} empty` });
       return;
     }
-    const validStartDate = `${startDate}T${startTime}`;
-    const validEndDate = `${endDate}T${endTime}`;
+    if (moment(validStartDate, savedDateFormat).diff(moment(validEndDate, savedDateFormat)) <= 0) {
+      const message = 'End date can not be less than Start date';
+      this.setState({ emptyErrors: ['startDate', 'endDate', 'startTime', 'endTime'] });
+      Notification.show({ message });
+      return;
+    }
     const createEvent = {
       query: createEventQuery,
       variables: {

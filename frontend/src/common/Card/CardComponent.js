@@ -6,12 +6,11 @@ import {
   Avatar, CardActions, CardContent, CardHeader, CardMedia, Icon, IconButton, Card,
 } from '@material-ui/core';
 import moment from 'moment';
-import { createPath, isUserInArray } from '../../helpers';
 import routes from '../../constants/routes';
-import { eventUserActions } from '../../constants/enums';
+import { eventUserActions, formats } from '../../constants/enums';
+import { createPath, isUserInArray } from '../../helpers';
 
-const dateFormat = 'dddd, MMMM Do YYYY, h:mm';
-const getColor = active => (active ? 'secondary' : '');
+const getColor = active => (active ? 'secondary' : 'default');
 const { AGREE, CANCEL, MAYBE } = eventUserActions;
 
 const CardComponent = ({
@@ -26,7 +25,7 @@ const CardComponent = ({
       <CardHeader
         avatar={(<Avatar aria-label="recipe" className={classes.avatar}>{authorName.charAt(0).toUpperCase()}</Avatar>)}
         title={event.name}
-        subheader={moment(event.start).format(dateFormat)}
+        subheader={moment(event.start).format(formats.cardDateFormat)}
       />
       <CardMedia
         className={classes.media}
