@@ -9,18 +9,18 @@ module.exports = {
     name: ['@babel/polyfill', path.join(__dirname, './index.js')],
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/',
   },
   devServer: {
-    historyApiFallback: true,
+    contentBase: 'dist',
   },
   resolve: {
     alias: {
       Common: path.resolve(__dirname, './src/common'),
     },
   },
+  watch: true,
   module: {
     rules: [{
       test: /\.js$/,
@@ -52,8 +52,6 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      hash: true,
-      filename: 'index.html', // target html
       template: './public/index.html', // source html
     }),
     new ExtractTextPlugin({ filename: 'css/style.css' }),

@@ -5,6 +5,7 @@
   "main": "index.js",
   "proxy": "http://localhost:3000/",
   "scripts": {
+    "dev": "node_modules/.bin/webpack --mode=development --config=webpack.config.js",
     "start": "node_modules/.bin/webpack-dev-server --mode development --hot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
