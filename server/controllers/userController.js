@@ -1,6 +1,5 @@
 const User = require('../models/userModel')
 
-exports.getAllUsers = async () => await User.find({});
 exports.getUser = async (id) => await User.findById(id);
 exports.verifyUser = async ({_id, token}) => {
   const user = await User.findById(_id)

@@ -89,7 +89,7 @@ class CreateEventPage extends Component {
       Notification.show({ message: `Required field${manyFields ? 's' : ''} ${emptyRequiredFields} ${manyFields ? 'are' : 'is'} empty` });
       return;
     }
-    if (moment(validStartDate, savedDateFormat).diff(moment(validEndDate, savedDateFormat)) <= 0) {
+    if (moment(validStartDate, savedDateFormat).diff(moment(validEndDate, savedDateFormat)) >= 0) {
       const message = 'End date can not be less than Start date';
       this.setState({ emptyErrors: ['startDate', 'endDate', 'startTime', 'endTime'] });
       Notification.show({ message });

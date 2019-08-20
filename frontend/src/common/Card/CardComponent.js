@@ -25,7 +25,7 @@ const CardComponent = ({
       <CardHeader
         avatar={(<Avatar aria-label="recipe" className={classes.avatar}>{authorName.charAt(0).toUpperCase()}</Avatar>)}
         title={event.name}
-        subheader={moment(event.start).format(formats.cardDateFormat)}
+        subheader={moment(event.start, formats.savedDateFormat).format(formats.cardDateFormat)}
       />
       <CardMedia
         className={classes.media}
