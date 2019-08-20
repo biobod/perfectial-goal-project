@@ -5,6 +5,14 @@ import { onAddUserToEvent, onRemoveUserFromEvent } from '../../APIUtilites/apiQu
 
 const styles = {
   root: {
+    width: '100%',
+  },
+  subheader: {
+    textAlign: 'left',
+    padding: '6px 40px',
+    borderBottom: '1px solid grey',
+  },
+  section: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

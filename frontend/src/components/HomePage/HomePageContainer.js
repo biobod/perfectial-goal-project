@@ -5,9 +5,9 @@ import HomePage from './HomePage';
 
 const styles = {};
 
-const onGeAllEvents = gql`
-    query allEvents {
-        allEvents {
+const onGeAllFutureEvents = gql`
+    query allFutureEvents {
+        allFutureEvents {
             name
             description
             start
@@ -27,8 +27,8 @@ const onGeAllEvents = gql`
 `;
 
 const HomePageContainer = compose(
-  graphql(onGeAllEvents, {
-    props: ({ data: { allEvents, error, loading } }) => ({ events: allEvents, error, loading }),
+  graphql(onGeAllFutureEvents, {
+    props: ({ data: { allFutureEvents, error, loading } }) => ({ events: allFutureEvents, error, loading }),
   }),
 )(HomePage);
 

@@ -14,7 +14,6 @@ class HomePage extends Component {
     if (error) return <div>{error.message}</div>;
     return (
       <div>
-        <h2>All Future Events</h2>
         <CardsView events={events} history={history} authorName="Adam" user={user} />
         <Link to="/login">Login Page</Link>
         <br />

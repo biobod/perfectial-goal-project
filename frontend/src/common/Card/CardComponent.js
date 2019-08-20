@@ -1,5 +1,7 @@
 import React from 'react';
-import { func, shape, string } from 'prop-types';
+import {
+  func, shape, string, bool,
+} from 'prop-types';
 import {
   Avatar, CardActions, CardContent, CardHeader, CardMedia, Icon, IconButton, Card,
 } from '@material-ui/core';
@@ -13,11 +15,12 @@ const getColor = active => (active ? 'secondary' : '');
 const { AGREE, CANCEL, MAYBE } = eventUserActions;
 
 const CardComponent = ({
-  event, classes, history, authorName, user, modifyEvent,
+  event, classes, history, authorName, user, modifyEvent, disabled,
 }) => {
   const isUserAgreed = isUserInArray(user._id, event.agreedUsers);
   const isUserMaybe = isUserInArray(user._id, event.maybeUsers);
   const isUserRejected = isUserInArray(user._id, event.rejectedUsers);
+  const isDisabled = disabled || user._id === event.creatorId;
   return (
     <Card className={classes.card} key={event._id}>
       <CardHeader
@@ -38,7 +41,7 @@ const CardComponent = ({
       <CardActions disableSpacing>
         <IconButton
           color={getColor(isUserAgreed)}
-          disabled={user._id === event.creatorId}
+          disabled={isDisabled}
           aria-label="add to favorites"
           onClick={() => modifyEvent(event._id, AGREE, isUserAgreed)}
         >
@@ -46,7 +49,7 @@ const CardComponent = ({
         </IconButton>
         <IconButton
           color={getColor(isUserMaybe)}
-          disabled={user._id === event.creatorId}
+          disabled={isDisabled}
           aria-label="maybe"
           onClick={() => modifyEvent(event._id, MAYBE, isUserMaybe)}
         >
@@ -54,7 +57,7 @@ const CardComponent = ({
         </IconButton>
         <IconButton
           aria-label="cancel"
-          disabled={user._id === event.creatorId}
+          disabled={isDisabled}
           color={getColor(isUserRejected)}
           onClick={() => modifyEvent(event._id, CANCEL, isUserRejected)}
         >
@@ -79,8 +82,10 @@ CardComponent.propTypes = {
   classes: shape({}).isRequired,
   user: shape({}).isRequired,
   modifyEvent: func.isRequired,
+  disabled: bool,
 };
 CardComponent.defaultProps = {
   authorName: '',
+  disabled: false,
 };
 export default CardComponent;

@@ -29,7 +29,7 @@ const query = `{
     getUserEvents(userId: String!): [Event]
     getUserEventsByType(userId: String!, type: String!): [Event]
     getEvent(eventId: String!): Event
-   
+    allFutureEvents: [Event]
     allEvents: [Event]
   }`;
 
