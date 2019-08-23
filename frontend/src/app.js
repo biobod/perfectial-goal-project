@@ -5,7 +5,6 @@ import { ApolloProvider } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
 import { client } from './APIUtilites/api';
 import { LoginPage, SignUpPage } from './components/SignUpAndLoginPages';
-import AllUsers from './components/AllUsers';
 import HomePage from './components/HomePage/HomePageContainer';
 import AccountProfile from './components/AccountProfile';
 import PrivateRoute from './utilsComponents/PrivateRoute';
@@ -49,7 +48,6 @@ class App extends Component {
                   <PrivateRoute path={routes.REJECTED} component={RejectEventsPage} />
                   <PrivateRoute path={routes.MAYBE} component={MaybeEventsPage} />
                   <PrivateRoute path={routes.ACCOUNT_PROFILE} component={AccountProfile} />
-                  <PrivateRoute path={routes.USERS} component={AllUsers} />
                   <PrivateRoute path={`${routes.EVENT_DETAIL}/:eventId`} component={EventDetailsPage} />
                   <PrivateRoute exact path="/" component={HomePage} />
                 </Switch>

@@ -7,7 +7,7 @@ import { onGetEvent } from '../../APIUtilites/apiQuery';
 import { eventUserActions, formats } from '../../constants/enums';
 
 const { AGREE, CANCEL, MAYBE } = eventUserActions;
-const { savedDateFormat, cardDateFormat } = formats;
+const { cardDateFormat } = formats;
 
 const statuses = {
   AGREE_TEXT: 'I will go',
@@ -34,10 +34,9 @@ class EventDetailsPage extends Component {
     }
     if (error) return <div>{error.message}</div>;
 
+    console.log(event)
     const isShowButtons = user._id !== event.creatorId;
-    const duration = moment
-      .duration(moment(event.end, savedDateFormat)
-        .diff(moment(event.start, savedDateFormat))).asHours();
+    const duration = moment.duration(moment(event.end).diff(moment(event.start))).asHours();
 
     const isUserAgreed = isUserInArray(user._id, event.agreedUsers);
     const isUserMaybe = isUserInArray(user._id, event.maybeUsers);

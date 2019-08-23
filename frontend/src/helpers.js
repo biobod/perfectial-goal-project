@@ -4,3 +4,13 @@ export const createPath = (path) => {
 };
 
 export const isUserInArray = (userId, usersArray) => usersArray.includes(userId);
+
+export const convertEventDatesToNumber = (event) => {
+  if (!event) return event;
+  const modifiedEvent = { ...event };
+  if (modifiedEvent.start && modifiedEvent.end) {
+    modifiedEvent.start = +event.start;
+    modifiedEvent.end = +event.end;
+  }
+  return modifiedEvent;
+};

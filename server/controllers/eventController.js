@@ -3,7 +3,7 @@ const moment = require('moment')
 const eventUserActions = [ 'agreedUsers', 'rejectedUsers', 'maybeUsers'];
 
 exports.getAllEvents = async () => await Event.find({});
-exports.getAllFutureEvents = async () => await Event.find({ start: { $gte: moment().format('YYYY-MM-DDТhh:mm') }});
+exports.getAllFutureEvents = async () => await Event.find({ start: { $gte: moment().toDate() }});
 exports.getEvent = async (id) => await Event.findById(id);
 exports.getUserEvents = async (id) => await Event.find({ creatorId: id });
 exports.getUserEventsByType = async ({userId, type}) => await Event.find({ [type]: userId });

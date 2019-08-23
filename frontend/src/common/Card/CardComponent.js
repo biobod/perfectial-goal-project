@@ -20,12 +20,13 @@ const CardComponent = ({
   const isUserMaybe = isUserInArray(user._id, event.maybeUsers);
   const isUserRejected = isUserInArray(user._id, event.rejectedUsers);
   const isDisabled = disabled || user._id === event.creatorId;
+
   return (
     <Card className={classes.card} key={event._id}>
       <CardHeader
         avatar={(<Avatar aria-label="recipe" className={classes.avatar}>{authorName.charAt(0).toUpperCase()}</Avatar>)}
         title={event.name}
-        subheader={moment(event.start, formats.savedDateFormat).format(formats.cardDateFormat)}
+        subheader={moment(event.start).format(formats.cardDateFormat)}
       />
       <CardMedia
         className={classes.media}

@@ -12,16 +12,7 @@ class HomePage extends Component {
       return <div> loading </div>;
     }
     if (error) return <div>{error.message}</div>;
-    return (
-      <div>
-        <CardsView events={events} history={history} authorName="Adam" user={user} />
-        <Link to="/login">Login Page</Link>
-        <br />
-        <Link to="/signup">Sign up Page</Link>
-        <br />
-        <Link to="/all_users">All users page</Link>
-      </div>
-    );
+    return (<CardsView events={events} history={history} authorName="Adam" user={user} />);
   }
 }
 HomePage.propTypes = {

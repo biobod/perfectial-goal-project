@@ -2,6 +2,7 @@ import { graphql, compose } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
 import EventDetailsPage from './EventDetailsPage';
 import { onAddUserToEvent, onGetEvent } from '../../APIUtilites/apiQuery';
+import { convertEventDatesToNumber } from '../../helpers';
 
 const styles = {
   root: {
@@ -42,8 +43,9 @@ const EventDetailsPageContainer = compose(
     options: props => ({
       variables: { eventId: props.match.params.eventId },
     }),
-    props: ({ data: { getEvent, error, loading } }) => ({ event: getEvent, error, loading }),
+    props: ({ data: { getEvent, error, loading } }) => ({ event: convertEventDatesToNumber(getEvent), error, loading }),
   }),
+  withStyles(styles),
 )(EventDetailsPage);
 
-export default withStyles(styles)(EventDetailsPageContainer);
+export default EventDetailsPageContainer;

@@ -27,6 +27,7 @@ const styles = {
 const CardsViewContainer = compose(
   graphql(onAddUserToEvent, { name: 'addUserToEvent' }),
   graphql(onRemoveUserFromEvent, { name: 'removeUserFromEvent' }),
+  withStyles(styles),
 )(CardsView);
 
-export default withStyles(styles)(CardsViewContainer);
+export default CardsViewContainer;

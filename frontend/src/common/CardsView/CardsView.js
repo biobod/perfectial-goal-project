@@ -4,10 +4,7 @@ import {
   shape, arrayOf, func,
 } from 'prop-types';
 import { onGetEvent } from '../../APIUtilites/apiQuery';
-import { formats } from '../../constants/enums';
 import Card from '../Card/CardContainer';
-
-const { savedDateFormat } = formats
 
 const CardsView = ({
   events, classes, history, user, addUserToEvent, removeUserFromEvent,
@@ -23,10 +20,9 @@ const CardsView = ({
     return null;
   }
   const passedEvents = [];
-  const currentDate = moment().format(savedDateFormat);
 
   const futureEvents = events.filter((event) => {
-    const isFutureEvent = moment(event.start, savedDateFormat).diff(moment(currentDate, savedDateFormat)) > 0;
+    const isFutureEvent = moment(+event.start).diff(moment()) > 0;
     if (!isFutureEvent) {
       passedEvents.push(event);
     }

@@ -2,6 +2,7 @@ import { graphql, compose } from 'react-apollo';
 import { withStyles } from '@material-ui/styles';
 import CardComponent from './CardComponent';
 import { onGetAuthorName } from '../../APIUtilites/apiQuery';
+import transformEventDate from '../../utilsComponents/transformEventDate';
 
 const styles = {
   gridList: {
@@ -51,6 +52,8 @@ const CardContainer = compose(
     }),
     props: ({ data: { getUser, error, loading } }) => ({ authorName: getUser ? getUser.name : '', error, loading }),
   }),
+  withStyles(styles),
+  transformEventDate,
 )(CardComponent);
 
-export default withStyles(styles)(CardContainer);
+export default CardContainer;

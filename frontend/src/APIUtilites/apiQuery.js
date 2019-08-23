@@ -49,7 +49,7 @@ export const onRemoveUserFromEvent = gql`
     }
 `;
 
-export const onGeFavoriteEvents = gql`
+export const onGetUserEventsByType = gql`
     query getUserEventsByType($userId: String!, $type: String! ) {
         getUserEventsByType(userId: $userId, type: $type) {
             name
@@ -59,6 +59,48 @@ export const onGeFavoriteEvents = gql`
             contribution
             creatorId
             _id
+            agreedUsers
+            rejectedUsers
+            maybeUsers
+            image {
+                path
+                filename
+            }
+        }
+    }
+`;
+
+export const onGeAllFutureEvents = gql`
+    query allFutureEvents {
+        allFutureEvents {
+            name
+            description
+            start
+            end
+            contribution
+            creatorId
+            _id
+            agreedUsers
+            rejectedUsers
+            maybeUsers
+            image {
+                path
+                filename
+            }
+        }
+    }
+`;
+
+export const onGetUserEvents = gql`
+    query getUserEvents($userId: String!) {
+        getUserEvents(userId: $userId) {
+            name
+            description
+            start
+            end
+            contribution
+            _id
+            creatorId
             agreedUsers
             rejectedUsers
             maybeUsers
