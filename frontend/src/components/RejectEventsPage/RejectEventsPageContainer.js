@@ -1,11 +1,7 @@
 import { graphql, compose } from 'react-apollo';
-import { withStyles } from '@material-ui/styles';
 import RejectEventsPage from './RejectEventsPage';
 import { eventUserActions } from '../../constants/enums';
 import { onGetUserEventsByType } from '../../APIUtilites/apiQuery';
-
-const styles = {};
-
 
 const RejectEventsPageContainer = compose(
   graphql(onGetUserEventsByType, {
@@ -15,7 +11,6 @@ const RejectEventsPageContainer = compose(
     }),
     props: ({ data: { getUserEventsByType, error, loading } }) => ({ events: getUserEventsByType, error, loading }),
   }),
-  withStyles(styles),
 )(RejectEventsPage);
 
 export default RejectEventsPageContainer;

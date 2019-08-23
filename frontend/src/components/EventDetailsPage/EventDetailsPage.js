@@ -34,7 +34,6 @@ class EventDetailsPage extends Component {
     }
     if (error) return <div>{error.message}</div>;
 
-    console.log(event)
     const isShowButtons = user._id !== event.creatorId;
     const duration = moment.duration(moment(event.end).diff(moment(event.start))).asHours();
 

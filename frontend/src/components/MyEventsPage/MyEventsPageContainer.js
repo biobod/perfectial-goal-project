@@ -1,9 +1,6 @@
 import { graphql, compose } from 'react-apollo';
-import { withStyles } from '@material-ui/styles';
 import MyEventsPage from './MyEventsPage';
 import { onGetUserEvents } from '../../APIUtilites/apiQuery';
-
-const styles = {};
 
 const MyEventsPageContainer = compose(
   graphql(onGetUserEvents, {
@@ -12,7 +9,6 @@ const MyEventsPageContainer = compose(
     }),
     props: ({ data: { getUserEvents, error, loading } }) => ({ events: getUserEvents, error, loading }),
   }),
-  withStyles(styles),
 )(MyEventsPage);
 
 export default MyEventsPageContainer;

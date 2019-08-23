@@ -8,6 +8,7 @@ const styles = {
   root: {
     maxWidth: 900,
     margin: '0 auto',
+    height: '100%',
   },
   dateSection: {
     display: 'block',
@@ -15,6 +16,7 @@ const styles = {
     marginBottom: 15,
   },
   description: {
+    minHeight: 300,
   },
   image: {
     float: 'left',
@@ -26,7 +28,7 @@ const styles = {
     justifyContent: 'space-between',
   },
   statusSection: {
-    marginTop: 20,
+    margin: '30px 0',
     display: 'flex',
     flexDirection: 'column',
   },
