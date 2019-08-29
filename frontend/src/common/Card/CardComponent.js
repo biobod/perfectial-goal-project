@@ -85,7 +85,7 @@ CardComponent.propTypes = {
   disabled: bool,
 };
 CardComponent.defaultProps = {
-  authorName: '',
+  authorName: 'Name',
   disabled: false,
 };
 export default CardComponent;
