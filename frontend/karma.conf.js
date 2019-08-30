@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 
 module.exports = function (config) {
   config.set({
@@ -10,15 +9,18 @@ module.exports = function (config) {
     ],
     mode: 'development',
     preprocessors: {
-      'test/index_test.js': ['webpack', 'sourcemap'],
+      'test/index_test.js': ['webpack'],
     },
-    reporters: ['dots'], // report results in this format
+    coverageReporter: {
+      type: 'html',
+      dir: 'coverage/',
+    },
+    reporters: ['dots', 'coverage'], // report results in this format
     webpack: { // kind of a copy of your webpack config
-      devtool: 'inline-source-map', // just do inline source maps instead of the default
       module: {
         rules: [
           {
-            test: /\.js$/,
+            test: /\.js|jsx$/,
             exclude: /node_modules/,
             loader: 'babel-loader',
             options: {

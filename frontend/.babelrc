@@ -1,3 +1,14 @@
 {
-  "plugins": ["@babel/plugin-proposal-class-properties"]
+  "plugins": ["@babel/plugin-proposal-class-properties"],
+  "env": {
+    "test": {
+      "plugins": [["istanbul", {
+        "all": true,
+        "include": ["src/**/*.js"],
+        "exclude": [
+          "src/**/*.test.js"
+        ]
+      }]]
+    }
+  }
 }

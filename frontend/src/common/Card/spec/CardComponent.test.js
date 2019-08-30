@@ -10,7 +10,7 @@ const props = {
   modifyEvent: () => {},
   event: {
     image: {
-      path: './some/imageName'
+      path: './some/imageName',
     },
     agreedUsers: [],
     maybeUsers: [],
@@ -21,6 +21,7 @@ const props = {
     push: () => {},
   },
 };
+
 describe('SSS', () => {
   it('SOME', () => {
     const component = shallow(<CardComponent {...props} />);

@@ -1,5 +1,5 @@
 import './enzyme';
 
-const testsContext = require.context('../src', true, /_test$/);
+const testsContext = require.context('../src', true, /\.test\.js$/);
 
 testsContext.keys().forEach(testsContext);
