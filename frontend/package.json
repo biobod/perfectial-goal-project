@@ -5,9 +5,9 @@
   "main": "index.js",
   "proxy": "http://localhost:3000/",
   "scripts": {
-    "dev": "node_modules/.bin/webpack --mode=development --config=webpack.config.js",
-    "start": "node_modules/.bin/webpack-dev-server --mode development --hot",
-    "test": "karma start"
+    "dev": "cross-env NODE_ENV=development node_modules/.bin/webpack --mode=development --config=webpack.config.js",
+    "start": "cross-env NODE_ENV=development node_modules/.bin/webpack-dev-server --mode development --hot",
+    "test": "cross-env NODE_ENV=test karma start"
   },
   "author": "Bogdan Nalisnikovskiy",
   "license": "ISC",
@@ -44,6 +44,8 @@
     "@babel/preset-react": "7.0.0",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.5",
+    "babel-plugin-istanbul": "^5.2.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^3.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
@@ -56,6 +58,7 @@
     "karma": "4.2.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-cli": "^2.0.0",
+    "karma-coverage": "2.0.1",
     "karma-eslint": "^2.2.0",
     "karma-jasmine": "^2.0.1",
     "karma-sourcemap-loader": "^0.3.7",
