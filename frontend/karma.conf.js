@@ -14,6 +14,7 @@ module.exports = function (config) {
     coverageReporter: {
       type: 'html',
       dir: 'coverage/',
+      subdir: '.',
     },
     reporters: ['dots', 'coverage'], // report results in this format
     webpack: { // kind of a copy of your webpack config
