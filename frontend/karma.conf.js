@@ -16,7 +16,7 @@ module.exports = function (config) {
       dir: 'coverage/',
       subdir: '.',
     },
-    reporters: ['dots', 'coverage'], // report results in this format
+    reporters: ['progress', 'coverage'], // report results in this format
     webpack: { // kind of a copy of your webpack config
       module: {
         rules: [

@@ -22,8 +22,8 @@ const props = {
   },
 };
 
-describe('SSS', () => {
-  it('SOME', () => {
+describe('CardComponent', () => {
+  it('CardComponent exist', () => {
     const component = shallow(<CardComponent {...props} />);
     expect(component).toExist(true);
   });
