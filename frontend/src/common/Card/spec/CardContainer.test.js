@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { Card } from '@material-ui/core';
 import CardContainer from '../CardContainer';
 import { onGetAuthorName } from '../../../APIUtilites/apiQuery';
 import CardComponent from '../CardComponent';
@@ -51,8 +50,8 @@ describe('CardContainer', () => {
       </MockedProvider>
     ));
     expect(wrapper.find(CardComponent).exists()).toBe(true);
-    await new Promise(resolve => setTimeout(resolve))
-    wrapper.update()
+    await new Promise(resolve => setTimeout(resolve));
+    wrapper.update();
     expect(wrapper.find(CardComponent).prop('authorName')).toEqual('Stephen King');
   });
 });
