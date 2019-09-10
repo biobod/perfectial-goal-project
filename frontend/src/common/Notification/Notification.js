@@ -92,7 +92,7 @@ class Notification extends Component {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         open={isOpen}
       >
-        <div>
+        <div className="notification">
           {messages.map(({ message, key, type }) => {
             const isError = type === 'error';
             const contentStyle = { backgroundColor: isError ? errorColor : successColor };

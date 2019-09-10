@@ -20,7 +20,6 @@ const CardsView = ({
     return null;
   }
   const passedEvents = [];
-
   const futureEvents = events.filter((event) => {
     const isFutureEvent = moment(+event.start).diff(moment()) > 0;
     if (!isFutureEvent) {
@@ -29,14 +28,31 @@ const CardsView = ({
     return isFutureEvent;
   });
   return (
-    <div className={classes.root}>
+    <div className={`${classes.root} cardView`}>
       {futureEvents.length ? <h3 className={classes.subheader}>Future events</h3> : ''}
       <div className={classes.section}>
-        {futureEvents.map(event => <Card key={event._id} event={event} modifyEvent={modifyEvent} history={history} user={user} />)}
+        {futureEvents.map(event => (
+          <Card
+            key={event._id}
+            event={event}
+            modifyEvent={modifyEvent}
+            history={history}
+            user={user}
+          />
+        ))}
       </div>
       {passedEvents.length ? <h3 className={classes.subheader}>Passed events</h3> : ''}
       <div className={classes.section}>
-        {passedEvents.map(event => <Card key={event._id} event={event} modifyEvent={modifyEvent} history={history} user={user} disabled />)}
+        {passedEvents.map(event => (
+          <Card
+            key={event._id}
+            event={event}
+            modifyEvent={modifyEvent}
+            history={history}
+            user={user}
+            disabled
+          />
+        ))}
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ module.exports = function (config) {
       dir: 'coverage/',
       subdir: '.',
     },
-    reporters: ['progress', 'coverage'], // report results in this format
+    reporters: ['nyan', 'coverage'], // report results in this format
     webpack: { // kind of a copy of your webpack config
       module: {
         rules: [
