@@ -1,11 +1,14 @@
 import times from 'lodash/times';
 
 export const event = {
-  creatorId: '12',
+  creatorId: 12,
   name: 'New Event',
+  description: 'some',
+  contribution: null,
   _id: '5d440a614a73ceb03e09be4d',
   image: {
     path: './some/imageName',
+    filename: 'imageName',
   },
   agreedUsers: [],
   maybeUsers: [],

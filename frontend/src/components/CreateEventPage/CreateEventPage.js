@@ -136,7 +136,7 @@ class CreateEventPage extends Component {
     } = this.state;
 
     return (
-      <div className={classes.root}>
+      <div className={`${classes.root} createEvent`}>
         <Grid
           item
           sm={8}

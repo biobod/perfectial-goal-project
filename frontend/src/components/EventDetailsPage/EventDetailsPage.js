@@ -45,7 +45,7 @@ class EventDetailsPage extends Component {
       || (isUserRejected && statuses.REJECTED_TEX);
 
     return (
-      <div className={classes.root}>
+      <div className={`${classes.root} eventDetails`}>
         <h2>{event.name}</h2>
         <div className={classes.dateSection}>
           <div>
