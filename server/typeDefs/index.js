@@ -37,7 +37,6 @@ const query = `{
   getUserEventsByType(userId: String!, type: String!): [Event]
   getEvent(eventId: String!): Event
   allFutureEvents: [Event]
-  allEvents: [Event]
 }`;
 
 const mutation = `{

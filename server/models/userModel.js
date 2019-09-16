@@ -37,7 +37,7 @@ UserSchema.methods.compareToken = function(token) {
   return new Promise((res, rej) => {
     jwt.verify(token, secretKey, function(err, decoded) {
       if (err) {
-        rej(new Error('token is no valid'));
+        rej(new Error('Token is no valid'));
       }else{
         res(decoded.id)
       }

@@ -32,7 +32,6 @@ const storeImage = ({ stream, filename, mimetype, encoding }) => {
 const resolvers = {
   Query: {
     allFutureEvents: async () => getAllFutureEvents(),
-    allEvents: async () => getAllEvents(),
     getUser: (root, {userId}) => getUser(userId),
     loginUser: (root, params) => loginUser(params),
     verifyUser: (root, params) => verifyUser(params),

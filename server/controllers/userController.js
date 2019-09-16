@@ -5,10 +5,9 @@ exports.verifyUser = async ({_id, token}) => {
   const user = await User.findById(_id)
   if(user) {
     const idFromToken = await user.compareToken(token)
-    console.log(idFromToken);
     return _id === idFromToken ? user : new Error('Please login again')
   }
-  return new Error('need to login')
+  return new Error('Need to login')
 }
 
 exports.loginUser = async ({ email, password }) => {
@@ -22,7 +21,6 @@ exports.loginUser = async ({ email, password }) => {
 }
 
 exports.userSave =  async ({ email, password, name }) => {
-  console.log('userSave', email)
   try {
     return await User.create({email, password, name})
   } catch (error) {

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { shape, string, node } from 'prop-types';
 import {
   AppBar, Toolbar, Typography, MenuItem, Menu,
-  IconButton, ListItem, ListItemIcon, ListItemText, List,
-  useTheme, CssBaseline, Divider, Drawer, Icon,
+  IconButton, useTheme, CssBaseline, Divider, Drawer, Icon,
 } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -12,11 +11,11 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { withRouter } from 'react-router';
 import routes from '../../constants/routes';
-
+import NavList from './NavList';
 import useStyles from './styles';
 
 
-export const NavBarWrapper = ({ history, user, children }) => {
+export const NavBarWrapper = ({ history, user, children, location }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = React.useState(false);
@@ -33,7 +32,6 @@ export const NavBarWrapper = ({ history, user, children }) => {
     handleMenuClose();
     history.push(routes.ACCOUNT_PROFILE);
   };
-
   const goToHome = () => history.push('/');
   const logOut = () => {
     localStorage.removeItem('user');
@@ -113,35 +111,7 @@ export const NavBarWrapper = ({ history, user, children }) => {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          <ListItem button key="create_event" onClick={() => history.push(routes.CREATE)}>
-            <ListItemIcon><Icon color="secondary">add_circle</Icon></ListItemIcon>
-            <ListItemText primary="Create event" />
-          </ListItem>
-          <ListItem button key="my_events" onClick={() => history.push(routes.MY)}>
-            <ListItemIcon><Icon color="secondary">star_alt</Icon></ListItemIcon>
-            <ListItemText primary="My events" />
-          </ListItem>
-          <ListItem button key="favorite" onClick={() => history.push(routes.FAVORITE)}>
-            <ListItemIcon><Icon color="secondary">favorite</Icon></ListItemIcon>
-            <ListItemText primary="Favorite events" />
-          </ListItem>
-          <ListItem button key="maybe_events" onClick={() => history.push(routes.MAYBE)}>
-            <ListItemIcon><Icon>thumbs_up_down</Icon></ListItemIcon>
-            <ListItemText primary="May be events" />
-          </ListItem>
-          <ListItem button key="rejected_events" onClick={() => history.push(routes.REJECTED)}>
-            <ListItemIcon><Icon>cancel</Icon></ListItemIcon>
-            <ListItemText primary="Rejected events" />
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListItem button key="Account" onClick={() => history.push(routes.ACCOUNT_PROFILE)}>
-            <ListItemIcon><Icon>account_circle</Icon></ListItemIcon>
-            <ListItemText primary="My account" />
-          </ListItem>
-        </List>
+        <NavList history={history} location={location} />
       </Drawer>
       {renderMenu}
       <main className={classes.content}>
@@ -152,6 +122,7 @@ export const NavBarWrapper = ({ history, user, children }) => {
 };
 NavBarWrapper.propTypes = {
   history: shape({}).isRequired,
+  location: shape({}).isRequired,
   children: node.isRequired,
   user: shape({
     name: string,
