@@ -10,8 +10,8 @@ import api from '../../APIUtilites/api';
 import styles from './styles';
 
 export class SignUpPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       name: '',
@@ -38,42 +38,40 @@ export class SignUpPage extends Component {
     const { classes } = this.props;
     const { name, password, email } = this.state;
     return (
-      <div>
-        <Container className={classes.form}>
-          <TextField
-            required
-            id="Email"
-            label="Email"
-            margin="normal"
-            variant="outlined"
-            onChange={this.onChange}
-            value={email}
-            name="email"
-          />
-          <TextField
-            required
-            id="name"
-            label="Name"
-            margin="normal"
-            variant="outlined"
-            onChange={this.onChange}
-            value={name}
-            name="name"
-          />
-          <TextField
-            required
-            id="password"
-            label="Password"
-            margin="normal"
-            variant="outlined"
-            onChange={this.onChange}
-            type="password"
-            value={password}
-            name="password"
-          />
-          <Button variant="contained" color="secondary" className={classes.buttonCls} onClick={this.onSignUp}>Sign up</Button>
-        </Container>
-      </div>
+      <Container className={classes.form}>
+        <TextField
+          required
+          id="Email"
+          label="Email"
+          margin="normal"
+          variant="outlined"
+          onChange={this.onChange}
+          value={email}
+          name="email"
+        />
+        <TextField
+          required
+          id="name"
+          label="Name"
+          margin="normal"
+          variant="outlined"
+          onChange={this.onChange}
+          value={name}
+          name="name"
+        />
+        <TextField
+          required
+          id="password"
+          label="Password"
+          margin="normal"
+          variant="outlined"
+          onChange={this.onChange}
+          type="password"
+          value={password}
+          name="password"
+        />
+        <Button variant="contained" color="secondary" className={classes.buttonCls} onClick={this.onSignUp}>Sign up</Button>
+      </Container>
     );
   }
 }

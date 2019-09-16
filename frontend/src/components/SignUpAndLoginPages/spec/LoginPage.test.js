@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { Container, TextField } from '@material-ui/core';
 import { LoginPage } from '../LoginPage';
 

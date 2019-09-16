@@ -12,6 +12,7 @@ export default {
     width: 'fit-content',
     color: 'white',
     height: '300px',
+    minWidth: '350px',
     padding: '0 30px',
   },
   buttonCls: {

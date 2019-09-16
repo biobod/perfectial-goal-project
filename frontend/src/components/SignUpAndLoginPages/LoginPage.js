@@ -9,8 +9,8 @@ import api from '../../APIUtilites/api';
 import styles from './styles';
 
 export class LoginPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       password: '',

@@ -11,6 +11,9 @@ class HomePage extends Component {
       return <div> loading </div>;
     }
     if (error) return <div>{error.message}</div>;
+    if (!events || !events.length) {
+      return <div>Sorry. No upcoming events found</div>;
+    }
     return (<CardsView events={events} history={history} authorName="Adam" user={user} />);
   }
 }
