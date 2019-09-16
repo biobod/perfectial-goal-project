@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/styles';
 import api from '../../APIUtilites/api';
 import styles from './styles';
 
-class LoginPage extends Component {
+export class LoginPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -44,7 +44,7 @@ class LoginPage extends Component {
       <Container className={classes.form}>
         <TextField
           required
-          id="outlined-required"
+          id="Email"
           label="Email"
           margin="normal"
           variant="outlined"
@@ -55,7 +55,7 @@ class LoginPage extends Component {
         />
         <TextField
           required
-          id="outlined-required"
+          id="Password"
           label="Password"
           margin="normal"
           variant="outlined"
@@ -76,4 +76,6 @@ LoginPage.propTypes = {
   history: shape({}).isRequired,
   classes: shape({}).isRequired,
 };
-export default withStyles(styles)(LoginPage);
+
+const LoginPageContainer = withStyles(styles)(LoginPage);
+export default LoginPageContainer;

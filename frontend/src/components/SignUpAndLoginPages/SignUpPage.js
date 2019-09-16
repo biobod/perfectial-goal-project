@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/styles';
 import api from '../../APIUtilites/api';
 import styles from './styles';
 
-class SignUpPage extends Component {
+export class SignUpPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -42,7 +42,7 @@ class SignUpPage extends Component {
         <Container className={classes.form}>
           <TextField
             required
-            id="outlined-required"
+            id="Email"
             label="Email"
             margin="normal"
             variant="outlined"
@@ -52,7 +52,7 @@ class SignUpPage extends Component {
           />
           <TextField
             required
-            id="outlined-required"
+            id="name"
             label="Name"
             margin="normal"
             variant="outlined"
@@ -62,7 +62,7 @@ class SignUpPage extends Component {
           />
           <TextField
             required
-            id="outlined-required"
+            id="password"
             label="Password"
             margin="normal"
             variant="outlined"

@@ -33,8 +33,8 @@ class EventDetailsPage extends Component {
       return <div> loading </div>;
     }
     if (error) return <div>{error.message}</div>;
-
-    const isShowButtons = user._id !== event.creatorId;
+    const isFutureEvent = moment(+event.start).diff(moment()) > 0;
+    const isShowButtons = user._id !== event.creatorId && isFutureEvent;
     const duration = moment.duration(moment(event.end).diff(moment(event.start))).asHours();
 
     const isUserAgreed = isUserInArray(user._id, event.agreedUsers);

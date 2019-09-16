@@ -24,7 +24,7 @@ class MyEventsPage extends Component {
     }
     return (
       <div>
-        <h2>My events </h2>
+        <h2>My events</h2>
         <CardsView events={events} history={history} authorName={user.name} user={user} />
       </div>
     );

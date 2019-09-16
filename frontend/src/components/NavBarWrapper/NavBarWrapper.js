@@ -10,12 +10,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { withRouter } from 'react-router';
 import routes from '../../constants/routes';
 
 import useStyles from './styles';
 
 
-const NavBarWrapper = ({ history, user, children }) => {
+export const NavBarWrapper = ({ history, user, children }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = React.useState(false);
@@ -162,4 +163,4 @@ NavBarWrapper.defaultProps = {
   },
 };
 
-export default NavBarWrapper;
+export default withRouter(NavBarWrapper);

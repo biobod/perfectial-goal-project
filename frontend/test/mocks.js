@@ -13,8 +13,8 @@ export const event = {
   agreedUsers: [],
   maybeUsers: [],
   rejectedUsers: [],
-  start: '1564830000000',
-  end: '1564837200000',
+  start: '1764830000000',
+  end: '1714837200000',
 };
 
 export const generateManyEvents = (count = 5) => times(count, index => ({

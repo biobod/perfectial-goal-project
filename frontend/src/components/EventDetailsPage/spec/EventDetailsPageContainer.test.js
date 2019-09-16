@@ -5,7 +5,7 @@ import EventDetailsPageContainer from '../EventDetailsPageContainer';
 import EventDetailsPage from '../EventDetailsPage';
 import { convertEventDatesToNumber } from '../../../helpers';
 import { event } from '../../../../test/mocks';
-import { onAddUserToEvent, onGetEvent } from '../../../APIUtilites/apiQuery';
+import { onGetEvent } from '../../../APIUtilites/apiQuery';
 
 const props = {
   classes: {},
