@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CardsView from '../CardsView';
-import { generateManyEvents  } from '../../../../test/mocks';
+import { generateManyEvents } from '../../../../test/mocks';
 
 const props = {
   user: {

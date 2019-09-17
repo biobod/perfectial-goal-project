@@ -8,7 +8,7 @@ import { LoginPage, SignUpPage } from './components/SignUpAndLoginPages';
 import HomePage from './components/HomePage/HomePageContainer';
 import AccountProfile from './components/AccountProfile';
 import PrivateRoute from './utilsComponents/PrivateRoute';
-import NavBarWrapper from './components/NavBarWrapper/NavBarWrapper';
+import NavBarWrapper from './components/NavBarWrapper/NavBarWrapper'; // eslint-disable-line
 import CreateEventPage from './components/CreateEventPage/CreateEventPageContainer';
 import MyEventsPage from './components/MyEventsPage/MyEventsPageContainer';
 import EventDetailsPage from './components/EventDetailsPage/EventDetailsPageContainer';

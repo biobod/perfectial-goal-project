@@ -15,7 +15,9 @@ import NavList from './NavList';
 import useStyles from './styles';
 
 
-export const NavBarWrapper = ({ history, user, children, location }) => {
+export const NavBarWrapper = ({
+  history, user, children, location,
+}) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = React.useState(false);
