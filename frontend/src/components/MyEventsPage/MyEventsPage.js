@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { shape, bool, arrayOf } from 'prop-types';
 import CardsView from '../../common/CardsView/CardsViewContainer';
-
+import routes from '../../constants/routes';
 
 class MyEventsPage extends Component {
   render() {
@@ -18,7 +18,7 @@ class MyEventsPage extends Component {
       return (
         <div>
         You are not have events.
-          <Link to="/create_event">Create your first event</Link>
+          <Link to={routes.CREATE}>Create your first event</Link>
         </div>
       );
     }

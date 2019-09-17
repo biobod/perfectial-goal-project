@@ -6,6 +6,7 @@ const MyEventsPageContainer = compose(
   graphql(onGetUserEvents, {
     options: props => ({
       variables: { userId: props.user._id },
+      fetchPolicy: 'network-only',
     }),
     props: ({ data: { getUserEvents, error, loading } }) => ({ events: getUserEvents, error, loading }),
   }),
